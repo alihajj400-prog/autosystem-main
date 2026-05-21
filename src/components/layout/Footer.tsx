@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail, Clock, MessageCircle, Shield, Wrench } from 'lucide-react';
 import { BUSINESS } from '@/lib/constants';
+import { BrandLogo } from '@/components/layout/BrandLogo';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -10,22 +11,18 @@ export function Footer() {
       <div className="container mx-auto px-4 py-16">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div>
-            <Link to="/" className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary">
-                <span className="font-display text-lg font-bold text-primary-foreground">A</span>
-              </div>
-              <span className="font-display text-xl font-semibold">Autosystem</span>
-            </Link>
-            <p className="mt-4 text-sm text-secondary-foreground/70">
+            <BrandLogo variant="light" showTagline={false} imageClassName="h-14 w-14" />
+            <p className="mt-4 font-display text-lg font-semibold">Auto System S.A.L.</p>
+            <p className="mt-3 text-sm leading-relaxed text-secondary-foreground/70">
               Lebanon&apos;s trusted Mazda specialist — inspected used vehicles, transparent USD
               pricing, and genuine parts & screens in stock.
             </p>
-            <div className="mt-4 flex flex-wrap gap-3 text-sm">
-              <span className="inline-flex items-center gap-1 text-secondary-foreground/60">
+            <div className="mt-5 flex flex-wrap gap-4 text-sm">
+              <span className="inline-flex items-center gap-1.5 text-secondary-foreground/60">
                 <Shield className="h-3.5 w-3.5 text-primary" />
                 Inspected
               </span>
-              <span className="inline-flex items-center gap-1 text-secondary-foreground/60">
+              <span className="inline-flex items-center gap-1.5 text-secondary-foreground/60">
                 <Wrench className="h-3.5 w-3.5 text-primary" />
                 Parts available
               </span>
@@ -113,8 +110,8 @@ export function Footer() {
 
         <div className="mt-12 border-t border-secondary-foreground/10 pt-8 text-center text-sm text-secondary-foreground/50">
           <p>
-            &copy; {currentYear} Autosystem Mazda — {BUSINESS.city}, {BUSINESS.country}. All rights
-            reserved.
+            &copy; {currentYear} Auto System S.A.L. — {BUSINESS.city}, {BUSINESS.country}. All
+            rights reserved.
           </p>
         </div>
       </div>

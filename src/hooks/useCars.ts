@@ -181,7 +181,7 @@ export function useSimilarCars(carId: string, model: string) {
   return useQuery({
     queryKey: ['cars', 'similar', carId, model],
     queryFn: async () => {
-      let query = supabase
+      const query = supabase
         .from('cars')
         .select('*')
         .eq('status', 'available')

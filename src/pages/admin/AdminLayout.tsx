@@ -110,9 +110,7 @@ export default function AdminLayout() {
       <aside className="fixed left-0 top-0 z-40 hidden h-screen w-64 bg-sidebar md:block">
         <div className="flex h-full flex-col">
           <div className="flex h-16 items-center gap-3 border-b border-sidebar-border px-6">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-sidebar-primary">
-              <span className="font-display text-sm font-bold text-sidebar-primary-foreground">A</span>
-            </div>
+            <img src="/logo.png" alt="Auto System" className="h-9 w-9 object-contain" />
             <span className="font-display text-lg font-semibold text-sidebar-foreground">Admin</span>
           </div>
           <SidebarNav />
@@ -129,8 +127,9 @@ export default function AdminLayout() {
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="w-64 bg-sidebar p-0 text-sidebar-foreground">
-              <div className="flex h-16 items-center border-b border-sidebar-border px-6 font-display text-lg font-semibold">
-                Autosystem Admin
+              <div className="flex h-16 items-center gap-3 border-b border-sidebar-border px-6">
+                <img src="/logo.png" alt="Auto System" className="h-8 w-8 object-contain" />
+                <span className="font-display text-lg font-semibold">Admin</span>
               </div>
               <SidebarNav onNavigate={() => setMobileOpen(false)} />
               <SidebarFooter userEmail={user.email} signOut={signOut} />

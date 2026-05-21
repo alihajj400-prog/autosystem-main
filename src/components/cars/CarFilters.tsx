@@ -37,7 +37,7 @@ export function CarFilters({ filters, onFiltersChange }: CarFiltersProps) {
       }
     }, 300);
     return () => clearTimeout(debounce);
-  }, [localSearch]);
+  }, [localSearch, filters.search, onFiltersChange]);
 
   const updateFilter = (key: keyof CarFiltersType, value: string | number | undefined) => {
     onFiltersChange({ ...filters, [key]: value });

@@ -84,9 +84,11 @@ export default function AuthPage() {
 
         <div className="rounded-lg border bg-card p-8">
           <div className="mb-6 text-center">
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary">
-              <span className="font-display text-xl font-bold text-primary-foreground">A</span>
-            </div>
+            <img
+              src="/logo.png"
+              alt="Auto System S.A.L."
+              className="mx-auto h-16 w-16 object-contain"
+            />
             <h1 className="mt-4 font-display text-2xl font-bold">
               {isSignUp ? 'Create Account' : 'Welcome Back'}
             </h1>

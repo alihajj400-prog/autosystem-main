@@ -43,7 +43,7 @@ export default function HomePage() {
   return (
     <div className="animate-fade-in">
       {/* Hero Section */}
-      <section className="relative min-h-[88vh] overflow-hidden">
+      <section className="relative min-h-[90vh] overflow-hidden">
         <div className="absolute inset-0">
           <img
             src={heroImage}
@@ -52,21 +52,29 @@ export default function HomePage() {
           />
           <div className="hero-gradient absolute inset-0" />
         </div>
-        
-        <div className="container relative z-10 mx-auto flex h-full flex-col justify-center px-4">
+
+        <div className="container relative z-10 mx-auto flex min-h-[90vh] flex-col justify-center px-4 py-24">
           <div className="max-w-2xl">
-            <p className="mb-4 text-sm font-medium uppercase tracking-widest text-primary">
-              Premium Mazda Dealership — {BUSINESS.city}, {BUSINESS.country}
+            <div className="mb-6 flex flex-wrap gap-2">
+              <span className="trust-pill">
+                <Shield className="h-3.5 w-3.5" />
+                150+ point inspection
+              </span>
+              <span className="trust-pill">USD pricing</span>
+              <span className="trust-pill">Since 2005</span>
+            </div>
+            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-primary-foreground/90">
+              Auto System S.A.L. · {BUSINESS.city}
             </p>
-            <h1 className="font-display text-4xl font-bold leading-tight text-white sm:text-5xl md:text-6xl">
+            <h1 className="font-display text-4xl font-bold leading-[1.1] text-white sm:text-5xl md:text-6xl">
               Premium Used Mazda
-              <span className="block text-primary">Vehicles in Lebanon</span>
+              <span className="block text-sky-200">Vehicles in Lebanon</span>
             </h1>
-            <p className="mt-6 max-w-lg text-lg text-white/80">
+            <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/85">
               Inspected used Mazdas, transparent USD pricing, and genuine parts & screens — your
               Mazda specialist in {BUSINESS.city}, {BUSINESS.country}.
             </p>
-            <div className="mt-8 flex flex-wrap gap-4">
+            <div className="mt-10 flex flex-wrap gap-3">
               <Link to="/inventory">
                 <Button size="lg" className="group">
                   View Inventory
@@ -96,11 +104,11 @@ export default function HomePage() {
       </section>
 
       {/* Value Props */}
-      <section className="border-b bg-card py-16">
+      <section className="border-b bg-card section-padding">
         <div className="container mx-auto px-4">
           <div className="grid gap-8 md:grid-cols-3">
-            <div className="flex items-start gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+            <div className="flex items-start gap-4 rounded-xl border bg-background/60 p-6 card-shadow">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10">
                 <Shield className="h-6 w-6 text-primary" />
               </div>
               <div>
@@ -110,8 +118,8 @@ export default function HomePage() {
                 </p>
               </div>
             </div>
-            <div className="flex items-start gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+            <div className="flex items-start gap-4 rounded-xl border bg-background/60 p-6 card-shadow">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10">
                 <Award className="h-6 w-6 text-primary" />
               </div>
               <div>
@@ -121,8 +129,8 @@ export default function HomePage() {
                 </p>
               </div>
             </div>
-            <div className="flex items-start gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+            <div className="flex items-start gap-4 rounded-xl border bg-background/60 p-6 card-shadow">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10">
                 <Wrench className="h-6 w-6 text-primary" />
               </div>
               <div>
@@ -137,11 +145,11 @@ export default function HomePage() {
       </section>
 
       {/* Featured Vehicles */}
-      <section className="py-20">
+      <section className="section-padding">
         <div className="container mx-auto px-4">
           <div className="mb-12 text-center">
-            <h2 className="font-display text-3xl font-bold sm:text-4xl">Featured Vehicles</h2>
-            <p className="mt-4 text-muted-foreground">
+            <h2 className="section-heading">Featured Vehicles</h2>
+            <p className="section-subheading mx-auto">
               Handpicked premium Mazda vehicles ready for the road
             </p>
           </div>
@@ -249,8 +257,8 @@ export default function HomePage() {
       <section className="bg-secondary py-20 text-secondary-foreground">
         <div className="container mx-auto px-4">
           <div className="mx-auto max-w-3xl text-center">
-            <h2 className="font-display text-3xl font-bold sm:text-4xl">
-              Why Autosystem?
+            <h2 className="section-heading text-secondary-foreground">
+              Why Auto System?
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-secondary-foreground/80">
               For nearly two decades, Autosystem has been Lebanon's premier destination for used Mazda vehicles. 
