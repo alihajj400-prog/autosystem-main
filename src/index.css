@@ -102,6 +102,28 @@
     );
   }
 
+  .hero-cinematic-overlay {
+    background: linear-gradient(
+      90deg,
+      hsl(220 35% 6% / 0.88) 0%,
+      hsl(220 30% 8% / 0.55) 45%,
+      hsl(220 35% 6% / 0.35) 100%
+    );
+  }
+
+  .ken-burns {
+    animation: kenBurns 22s ease-in-out infinite alternate;
+    transform: scale(1.08);
+  }
+
+  .btn-hero-primary {
+    @apply inline-flex items-center justify-center rounded-full bg-white px-8 py-3.5 text-sm font-semibold text-black shadow-lg transition-all hover:bg-white/90 hover:shadow-xl;
+  }
+
+  .btn-hero-outline {
+    @apply inline-flex items-center justify-center rounded-full border border-white/40 bg-transparent px-8 py-3.5 text-sm font-semibold text-white backdrop-blur-sm transition-all hover:border-white hover:bg-white/10;
+  }
+
   .card-shadow {
     box-shadow:
       0 1px 2px hsl(220 30% 12% / 0.04),
@@ -133,6 +155,15 @@
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes kenBurns {
+  0% {
+    transform: scale(1.05) translate(0, 0);
+  }
+  100% {
+    transform: scale(1.14) translate(-1.5%, -1%);
   }
 }
 

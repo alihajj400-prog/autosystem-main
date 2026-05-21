@@ -15,8 +15,8 @@ export const BUSINESS = {
     sunday: 'Sunday: Closed',
   },
   social: {
-    instagram: 'https://instagram.com/autosystem.lb',
-    facebook: 'https://facebook.com/autosystem.lb',
+    instagram: 'https://www.instagram.com/autosystem.s.a.l/',
+    facebook: 'https://www.facebook.com/autosystemsal/',
     whatsappLink: 'https://wa.me/96103750078',
   },
 } as const;

@@ -1,4 +1,4 @@
-import { MapPin, Phone, Mail, Clock, MessageCircle } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, MessageCircle, Instagram, Facebook } from 'lucide-react';
 import { ContactForm } from '@/components/cars/ContactForm';
 import { Button } from '@/components/ui/button';
 import { BUSINESS } from '@/lib/constants';
@@ -23,6 +23,18 @@ export default function ContactPage() {
               <Button size="lg" className="bg-green-600 hover:bg-green-700">
                 <MessageCircle className="mr-2 h-4 w-4" />
                 WhatsApp
+              </Button>
+            </a>
+            <a href={BUSINESS.social.instagram} target="_blank" rel="noopener noreferrer">
+              <Button variant="outline" size="lg">
+                <Instagram className="mr-2 h-4 w-4" />
+                Instagram
+              </Button>
+            </a>
+            <a href={BUSINESS.social.facebook} target="_blank" rel="noopener noreferrer">
+              <Button variant="outline" size="lg">
+                <Facebook className="mr-2 h-4 w-4" />
+                Facebook
               </Button>
             </a>
           </div>
@@ -80,6 +92,40 @@ export default function ContactPage() {
                       className="mt-1 block text-muted-foreground hover:text-primary"
                     >
                       Click to chat
+                    </a>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+                    <Instagram className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium">Instagram</h3>
+                    <a
+                      href={BUSINESS.social.instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-1 block text-muted-foreground hover:text-primary"
+                    >
+                      @autosystem.s.a.l
+                    </a>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
+                    <Facebook className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium">Facebook</h3>
+                    <a
+                      href={BUSINESS.social.facebook}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-1 block text-muted-foreground hover:text-primary"
+                    >
+                      autosystemsal
                     </a>
                   </div>
                 </div>

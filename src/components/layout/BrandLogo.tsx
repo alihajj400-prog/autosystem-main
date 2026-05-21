@@ -34,7 +34,7 @@ export function BrandLogo({
               isLight ? 'text-white' : 'text-foreground'
             )}
           >
-            Auto System
+            <span className={isLight ? 'text-primary' : 'text-primary'}>Auto</span> System
           </span>
           <span
             className={cn(

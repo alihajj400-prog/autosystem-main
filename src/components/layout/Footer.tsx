@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { MapPin, Phone, Mail, Clock, MessageCircle, Shield, Wrench } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, MessageCircle, Shield, Wrench, Instagram, Facebook } from 'lucide-react';
 import { BUSINESS } from '@/lib/constants';
 import { BrandLogo } from '@/components/layout/BrandLogo';
 
@@ -26,6 +26,35 @@ export function Footer() {
                 <Wrench className="h-3.5 w-3.5 text-primary" />
                 Parts available
               </span>
+            </div>
+            <div className="mt-6 flex items-center gap-3">
+              <a
+                href={BUSINESS.social.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-secondary-foreground/20 text-secondary-foreground/80 transition-colors hover:border-primary hover:bg-primary/10 hover:text-primary"
+                aria-label="Instagram"
+              >
+                <Instagram className="h-4 w-4" />
+              </a>
+              <a
+                href={BUSINESS.social.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-secondary-foreground/20 text-secondary-foreground/80 transition-colors hover:border-primary hover:bg-primary/10 hover:text-primary"
+                aria-label="Facebook"
+              >
+                <Facebook className="h-4 w-4" />
+              </a>
+              <a
+                href={BUSINESS.social.whatsappLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-secondary-foreground/20 text-secondary-foreground/80 transition-colors hover:border-green-600 hover:bg-green-600/10 hover:text-green-500"
+                aria-label="WhatsApp"
+              >
+                <MessageCircle className="h-4 w-4" />
+              </a>
             </div>
           </div>
 

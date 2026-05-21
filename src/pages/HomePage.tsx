@@ -1,13 +1,12 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Shield, Award, Wrench, Star, Phone, MessageCircle, Package } from 'lucide-react';
+import { ArrowRight, Shield, Award, Wrench, Star, Phone, Package } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { CarCard } from '@/components/cars/CarCard';
 import { PartCard } from '@/components/parts/PartCard';
+import { HomeHero } from '@/components/home/HomeHero';
 import { useFeaturedCars } from '@/hooks/useCars';
 import { useFeaturedParts } from '@/hooks/useParts';
 import { BUSINESS } from '@/lib/constants';
-
-const heroImage = '/hero-mazda.svg';
 
 const TESTIMONIALS = [
   {
@@ -42,67 +41,9 @@ export default function HomePage() {
 
   return (
     <div className="animate-fade-in">
-      {/* Hero Section */}
-      <section className="relative min-h-[90vh] overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src={heroImage}
-            alt="Premium Mazda vehicle in showroom"
-            className="h-full w-full object-cover"
-          />
-          <div className="hero-gradient absolute inset-0" />
-        </div>
+      <HomeHero />
 
-        <div className="container relative z-10 mx-auto flex min-h-[90vh] flex-col justify-center px-4 py-24">
-          <div className="max-w-2xl">
-            <div className="mb-6 flex flex-wrap gap-2">
-              <span className="trust-pill">
-                <Shield className="h-3.5 w-3.5" />
-                150+ point inspection
-              </span>
-              <span className="trust-pill">USD pricing</span>
-              <span className="trust-pill">Since 2005</span>
-            </div>
-            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-primary-foreground/90">
-              Auto System S.A.L. · {BUSINESS.city}
-            </p>
-            <h1 className="font-display text-4xl font-bold leading-[1.1] text-white sm:text-5xl md:text-6xl">
-              Premium Used Mazda
-              <span className="block text-sky-200">Vehicles in Lebanon</span>
-            </h1>
-            <p className="mt-6 max-w-lg text-lg leading-relaxed text-white/85">
-              Inspected used Mazdas, transparent USD pricing, and genuine parts & screens — your
-              Mazda specialist in {BUSINESS.city}, {BUSINESS.country}.
-            </p>
-            <div className="mt-10 flex flex-wrap gap-3">
-              <Link to="/inventory">
-                <Button size="lg" className="group">
-                  View Inventory
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Button>
-              </Link>
-              <Link to="/parts">
-                <Button size="lg" variant="secondary" className="bg-white/15 text-white hover:bg-white/25">
-                  <Package className="mr-2 h-4 w-4" />
-                  Parts & Screens
-                </Button>
-              </Link>
-              <Link to="/contact">
-                <Button size="lg" variant="outline" className="border-white/30 bg-white/10 text-white backdrop-blur-sm hover:bg-white/20">
-                  Contact Us
-                </Button>
-              </Link>
-              <a href={BUSINESS.social.whatsappLink} target="_blank" rel="noopener noreferrer">
-                <Button size="lg" className="bg-green-600 text-white hover:bg-green-700">
-                  <MessageCircle className="mr-2 h-4 w-4" />
-                  WhatsApp
-                </Button>
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
+      <div id="home-content">
       {/* Value Props */}
       <section className="border-b bg-card section-padding">
         <div className="container mx-auto px-4">
@@ -284,6 +225,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      </div>
     </div>
   );
 }
