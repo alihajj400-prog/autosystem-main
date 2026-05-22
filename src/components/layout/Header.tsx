@@ -29,7 +29,6 @@ export function Header() {
 
   const navLinks = [
     { href: '/', label: 'Home' },
-    { href: '/about', label: 'Our Story' },
     { href: '/inventory', label: 'Inventory' },
     { href: '/parts', label: 'Parts & Screens' },
     { href: '/contact', label: 'Contact' },

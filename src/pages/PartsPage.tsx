@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
+import { PartFilters as PartFiltersType } from '@/types/part';
 import { Link } from 'react-router-dom';
 import { Loader2, Package } from 'lucide-react';
 import { usePublicParts } from '@/hooks/useParts';
 import { PartCard } from '@/components/parts/PartCard';
 import { PartFilters } from '@/components/parts/PartFilters';
-import { PartFilters as PartFiltersType } from '@/types/part';
 import { Button } from '@/components/ui/button';
 import {
   Select,
@@ -15,9 +15,24 @@ import {
 } from '@/components/ui/select';
 import { BUSINESS } from '@/lib/constants';
 
+function applyFilterPatch(
+  prev: PartFiltersType,
+  patch: Partial<PartFiltersType>
+): PartFiltersType {
+  const next = { ...prev, ...patch };
+  (Object.keys(patch) as (keyof PartFiltersType)[]).forEach((key) => {
+    if (patch[key] === undefined) delete next[key];
+  });
+  return next;
+}
+
 export default function PartsPage() {
   const [filters, setFilters] = useState<PartFiltersType>({});
   const { data: parts, isLoading, error } = usePublicParts(filters);
+
+  const handleFiltersChange = useCallback((patch: Partial<PartFiltersType>) => {
+    setFilters((prev) => applyFilterPatch(prev, patch));
+  }, []);
 
   return (
     <div className="animate-fade-in py-12">
@@ -70,7 +85,7 @@ export default function PartsPage() {
 
         <div className="lg:grid lg:grid-cols-[280px_1fr] lg:gap-8">
           <aside className="mb-6 lg:mb-0">
-            <PartFilters filters={filters} onFiltersChange={setFilters} />
+            <PartFilters filters={filters} onFiltersChange={handleFiltersChange} />
           </aside>
 
           <div>

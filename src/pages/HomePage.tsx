@@ -210,9 +210,9 @@ export default function HomePage() {
               Whether you're looking for a sporty Mazda3, a family-friendly CX-5, or a luxurious CX-9, we'll help you find the perfect match.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-              <Link to="/about">
-                <Button size="lg" variant="secondary" className="bg-primary text-primary-foreground hover:bg-primary/90">
-                  Learn More About Us
+              <Link to="/contact">
+                <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90">
+                  Get in Touch
                 </Button>
               </Link>
               <a href={`tel:${BUSINESS.phone}`}>

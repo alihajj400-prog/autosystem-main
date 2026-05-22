@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Search, SlidersHorizontal, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -22,50 +22,38 @@ import { MAZDA_MODELS, PART_CATEGORIES } from '@/lib/constants';
 
 interface PartFiltersProps {
   filters: PartFiltersType;
-  onFiltersChange: (filters: PartFiltersType) => void;
+  onFiltersChange: (patch: Partial<PartFiltersType>) => void;
 }
 
-export function PartFilters({ filters, onFiltersChange }: PartFiltersProps) {
-  const [localSearch, setLocalSearch] = useState(filters.search || '');
-  const [isOpen, setIsOpen] = useState(false);
+interface PartFiltersPanelProps {
+  filters: PartFiltersType;
+  onFilterChange: (key: keyof PartFiltersType, value: string | undefined) => void;
+  onClear: () => void;
+  activeFilterCount: number;
+}
 
-  useEffect(() => {
-    const debounce = setTimeout(() => {
-      if (localSearch !== filters.search) {
-        onFiltersChange({ ...filters, search: localSearch || undefined });
-      }
-    }, 300);
-    return () => clearTimeout(debounce);
-  }, [localSearch, filters, onFiltersChange]);
-
-  const updateFilter = (key: keyof PartFiltersType, value: string | undefined) => {
-    onFiltersChange({ ...filters, [key]: value });
-  };
-
-  const clearFilters = () => {
-    setLocalSearch('');
-    onFiltersChange({});
-  };
-
-  const activeFilterCount = Object.entries(filters).filter(
-    ([key, v]) => v !== undefined && key !== 'sort'
-  ).length;
+function PartFiltersPanel({
+  filters,
+  onFilterChange,
+  onClear,
+  activeFilterCount,
+}: PartFiltersPanelProps) {
   const hasActiveFilters = activeFilterCount > 0;
 
-  const FiltersContent = () => (
+  return (
     <div className="space-y-6">
       <div>
         <Label className="text-sm font-medium">Type</Label>
         <Select
           value={filters.type || '__all'}
           onValueChange={(value) =>
-            updateFilter('type', value === '__all' ? undefined : (value as 'part' | 'screen'))
+            onFilterChange('type', value === '__all' ? undefined : value)
           }
         >
           <SelectTrigger className="mt-2">
             <SelectValue placeholder="All types" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent position="popper" className="z-[100]">
             <SelectItem value="__all">All types</SelectItem>
             <SelectItem value="part">Parts</SelectItem>
             <SelectItem value="screen">Screens</SelectItem>
@@ -77,12 +65,14 @@ export function PartFilters({ filters, onFiltersChange }: PartFiltersProps) {
         <Label className="text-sm font-medium">Category</Label>
         <Select
           value={filters.category || '__all'}
-          onValueChange={(value) => updateFilter('category', value === '__all' ? undefined : value)}
+          onValueChange={(value) =>
+            onFilterChange('category', value === '__all' ? undefined : value)
+          }
         >
           <SelectTrigger className="mt-2">
             <SelectValue placeholder="All categories" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent position="popper" className="z-[100]">
             <SelectItem value="__all">All categories</SelectItem>
             {PART_CATEGORIES.map((cat) => (
               <SelectItem key={cat} value={cat}>
@@ -97,12 +87,14 @@ export function PartFilters({ filters, onFiltersChange }: PartFiltersProps) {
         <Label className="text-sm font-medium">Compatible model</Label>
         <Select
           value={filters.model || '__all'}
-          onValueChange={(value) => updateFilter('model', value === '__all' ? undefined : value)}
+          onValueChange={(value) =>
+            onFilterChange('model', value === '__all' ? undefined : value)
+          }
         >
           <SelectTrigger className="mt-2">
             <SelectValue placeholder="Any model" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent position="popper" className="z-[100]">
             <SelectItem value="__all">Any model</SelectItem>
             {MAZDA_MODELS.map((model) => (
               <SelectItem key={model} value={model}>
@@ -117,12 +109,14 @@ export function PartFilters({ filters, onFiltersChange }: PartFiltersProps) {
         <Label className="text-sm font-medium">Condition</Label>
         <Select
           value={filters.condition || '__all'}
-          onValueChange={(value) => updateFilter('condition', value === '__all' ? undefined : value)}
+          onValueChange={(value) =>
+            onFilterChange('condition', value === '__all' ? undefined : value)
+          }
         >
           <SelectTrigger className="mt-2">
             <SelectValue placeholder="Any" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent position="popper" className="z-[100]">
             <SelectItem value="__all">Any</SelectItem>
             <SelectItem value="new">New</SelectItem>
             <SelectItem value="used">Used</SelectItem>
@@ -131,13 +125,61 @@ export function PartFilters({ filters, onFiltersChange }: PartFiltersProps) {
       </div>
 
       {hasActiveFilters && (
-        <Button variant="outline" onClick={clearFilters} className="w-full">
+        <Button variant="outline" onClick={onClear} className="w-full">
           <X className="mr-2 h-4 w-4" />
           Clear filters ({activeFilterCount})
         </Button>
       )}
     </div>
   );
+}
+
+export function PartFilters({ filters, onFiltersChange }: PartFiltersProps) {
+  const [localSearch, setLocalSearch] = useState(filters.search || '');
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    setLocalSearch(filters.search || '');
+  }, [filters.search]);
+
+  useEffect(() => {
+    const debounce = setTimeout(() => {
+      if (localSearch !== (filters.search || '')) {
+        onFiltersChange({ search: localSearch || undefined });
+      }
+    }, 300);
+    return () => clearTimeout(debounce);
+  }, [localSearch, filters.search, onFiltersChange]);
+
+  const handleFilterChange = useCallback(
+    (key: keyof PartFiltersType, value: string | undefined) => {
+      onFiltersChange({ [key]: value });
+    },
+    [onFiltersChange]
+  );
+
+  const clearFilters = useCallback(() => {
+    setLocalSearch('');
+    onFiltersChange({
+      search: undefined,
+      type: undefined,
+      category: undefined,
+      model: undefined,
+      condition: undefined,
+    });
+  }, [onFiltersChange]);
+
+  const activeFilterCount = Object.entries(filters).filter(
+    ([key, v]) => v !== undefined && key !== 'sort'
+  ).length;
+  const hasActiveFilters = activeFilterCount > 0;
+
+  const panelProps = {
+    filters,
+    onFilterChange: handleFilterChange,
+    onClear: clearFilters,
+    activeFilterCount,
+  };
 
   return (
     <div className="space-y-4">
@@ -169,7 +211,7 @@ export function PartFilters({ filters, onFiltersChange }: PartFiltersProps) {
               <SheetTitle>Filter products</SheetTitle>
             </SheetHeader>
             <div className="mt-6">
-              <FiltersContent />
+              <PartFiltersPanel {...panelProps} />
             </div>
           </SheetContent>
         </Sheet>
@@ -177,7 +219,7 @@ export function PartFilters({ filters, onFiltersChange }: PartFiltersProps) {
 
       <div className="hidden rounded-lg border bg-card p-6 lg:block">
         <h3 className="mb-4 font-display text-lg font-semibold">Filters</h3>
-        <FiltersContent />
+        <PartFiltersPanel {...panelProps} />
       </div>
     </div>
   );
