@@ -8,23 +8,12 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { ArrowLeft, Fuel, Gauge, Settings, Calendar, Loader2, Phone, MessageCircle, MapPin } from 'lucide-react';
 import { BUSINESS } from '@/lib/constants';
+import { formatMileage, formatPrice } from '@/lib/format';
 
 export default function CarDetailPage() {
   const { id } = useParams<{ id: string }>();
   const { data: car, isLoading, error } = useCar(id || '');
   const { data: similarCars } = useSimilarCars(id || '', car?.model || '');
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      maximumFractionDigits: 0,
-    }).format(price);
-  };
-
-  const formatMileage = (mileage: number) => {
-    return new Intl.NumberFormat('en-US').format(mileage);
-  };
 
   if (isLoading) {
     return (
@@ -112,7 +101,7 @@ export default function CarDetailPage() {
               </div>
               <div className="flex items-center gap-2">
                 <Gauge className="h-4 w-4 text-muted-foreground" />
-                <span className="text-sm">{formatMileage(car.mileage)} km</span>
+                <span className="text-sm">{formatMileage(car.mileage)}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Settings className="h-4 w-4 text-muted-foreground" />
@@ -162,7 +151,7 @@ export default function CarDetailPage() {
                 </div>
                 <div className="flex justify-between rounded-lg border bg-card px-4 py-3">
                   <span className="text-sm text-muted-foreground">Mileage</span>
-                  <span className="text-sm font-medium">{formatMileage(car.mileage)} km</span>
+                  <span className="text-sm font-medium">{formatMileage(car.mileage)}</span>
                 </div>
                 {car.engine && (
                   <div className="flex justify-between rounded-lg border bg-card px-4 py-3">

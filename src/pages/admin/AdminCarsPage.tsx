@@ -25,6 +25,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Plus, Pencil, Trash2, Loader2, Search, Star, StarOff } from 'lucide-react';
 import { toast } from 'sonner';
+import { formatMileage } from '@/lib/format';
 
 export default function AdminCarsPage() {
   const { data: cars, isLoading } = useCars();
@@ -66,10 +67,6 @@ export default function AdminCarsPage() {
       currency: 'USD',
       maximumFractionDigits: 0,
     }).format(price);
-  };
-
-  const formatMileage = (mileage: number) => {
-    return new Intl.NumberFormat('en-US').format(mileage);
   };
 
   const filteredCars = cars?.filter((car) => {
@@ -154,7 +151,7 @@ export default function AdminCarsPage() {
                   </TableCell>
                   <TableCell>{car.year}</TableCell>
                   <TableCell>{formatPrice(car.price)}</TableCell>
-                  <TableCell>{formatMileage(car.mileage)} km</TableCell>
+                  <TableCell>{formatMileage(car.mileage)}</TableCell>
                   <TableCell>
                     <button onClick={() => toggleStatus(car.id, car.status || 'available')}>
                       <Badge variant={car.status === 'sold' ? 'secondary' : 'default'}>

@@ -341,10 +341,12 @@ export default function CarFormPage() {
           </div>
 
           <div>
-            <Label htmlFor="mileage">Mileage (km) *</Label>
+            <Label htmlFor="mileage">Mileage (miles) *</Label>
             <Input
               id="mileage"
               type="number"
+              min={0}
+              placeholder="e.g. 45000"
               {...register('mileage', { valueAsNumber: true })}
               className="mt-1.5"
             />

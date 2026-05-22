@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { Car } from '@/types/car';
 import { Badge } from '@/components/ui/badge';
 import { Fuel, Gauge, Settings, MapPin, CheckCircle2 } from 'lucide-react';
-import { formatPrice, formatNumber } from '@/lib/format';
+import { formatPrice, formatMileage } from '@/lib/format';
 
 interface CarCardProps {
   car: Car;
@@ -53,7 +53,7 @@ export function CarCard({ car }: CarCardProps) {
         <div className="mt-4 flex flex-wrap gap-3 text-xs text-muted-foreground">
           <div className="flex items-center gap-1">
             <Gauge className="h-3.5 w-3.5" />
-            <span>{formatNumber(car.mileage)} km</span>
+            <span>{formatMileage(car.mileage)}</span>
           </div>
           <div className="flex items-center gap-1">
             <Settings className="h-3.5 w-3.5" />

@@ -196,7 +196,7 @@ export function CarFilters({ filters, onFiltersChange }: CarFiltersProps) {
 
       {/* Mileage */}
       <div>
-        <Label className="text-sm font-medium">Max Mileage (km)</Label>
+        <Label className="text-sm font-medium">Max Mileage (miles)</Label>
         <Input
           type="number"
           placeholder="No limit"
