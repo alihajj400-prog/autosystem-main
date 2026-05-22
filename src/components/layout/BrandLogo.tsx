@@ -23,6 +23,7 @@ export function BrandLogo({
         alt="Auto System S.A.L."
         className={cn(
           'h-11 w-11 object-contain transition-transform group-hover:scale-[1.02] sm:h-12 sm:w-12',
+          isLight && 'drop-shadow-[0_1px_2px_rgba(0,0,0,0.35)]',
           imageClassName
         )}
       />
