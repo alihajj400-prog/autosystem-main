@@ -35,15 +35,15 @@ export default function PartsPage() {
   }, []);
 
   return (
-    <div className="animate-fade-in py-12">
+    <div className="animate-fade-in py-8 sm:py-12">
       <div className="container mx-auto px-4">
-        <div className="mb-10 rounded-2xl border bg-gradient-to-br from-card via-card to-primary/5 p-8 md:p-10">
-          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+        <div className="mb-8 rounded-2xl border bg-gradient-to-br from-card via-card to-primary/5 p-5 sm:mb-10 sm:p-8 md:p-10">
+          <div className="flex flex-col gap-4 sm:gap-6 md:flex-row md:items-end md:justify-between">
             <div className="max-w-2xl">
-              <p className="text-sm font-medium uppercase tracking-widest text-primary">
+              <p className="text-xs font-medium uppercase tracking-widest text-primary sm:text-sm">
                 Autosystem · Lebanon
               </p>
-              <h1 className="mt-2 font-display text-3xl font-bold sm:text-4xl">
+              <h1 className="mt-2 font-display text-2xl font-bold sm:text-3xl md:text-4xl">
                 Parts & Screens
               </h1>
               <p className="mt-3 text-muted-foreground">
@@ -57,10 +57,10 @@ export default function PartsPage() {
           </div>
         </div>
 
-        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Package className="h-4 w-4 text-primary" />
-            Mazda specialist · Inspected quality · Parts & screens in stock
+        <div className="mb-6 flex flex-col gap-4 sm:mb-8 sm:flex-row sm:items-end sm:justify-between">
+          <div className="flex items-center gap-2 text-xs text-muted-foreground sm:text-sm">
+            <Package className="h-4 w-4 shrink-0 text-primary" />
+            <span>Mazda specialist · Parts & screens in stock</span>
           </div>
           <div className="flex items-center gap-2">
             <span className="text-sm text-muted-foreground whitespace-nowrap">Sort by:</span>
@@ -70,7 +70,7 @@ export default function PartsPage() {
                 setFilters({ ...filters, sort: value === 'newest' ? undefined : value })
               }
             >
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className="w-full min-w-[160px] sm:w-[180px]">
                 <SelectValue placeholder="Newest first" />
               </SelectTrigger>
               <SelectContent>
@@ -83,12 +83,12 @@ export default function PartsPage() {
           </div>
         </div>
 
-        <div className="lg:grid lg:grid-cols-[280px_1fr] lg:gap-8">
+        <div className="lg:grid lg:grid-cols-[260px_1fr] lg:gap-8">
           <aside className="mb-6 lg:mb-0">
             <PartFilters filters={filters} onFiltersChange={handleFiltersChange} />
           </aside>
 
-          <div>
+          <div className="min-w-0">
             {isLoading ? (
               <div className="flex items-center justify-center py-20">
                 <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -102,7 +102,7 @@ export default function PartsPage() {
                 <p className="mb-6 text-sm text-muted-foreground">
                   Showing {parts.length} product{parts.length !== 1 ? 's' : ''}
                 </p>
-                <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 xl:grid-cols-3">
                   {parts.map((part) => (
                     <PartCard key={part.id} part={part} />
                   ))}

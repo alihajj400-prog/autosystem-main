@@ -39,9 +39,9 @@ export function CarCard({ car }: CarCardProps) {
       </div>
 
       {/* Content */}
-      <div className="p-5">
+      <div className="p-4 sm:p-5">
         <div className="mb-2">
-          <h3 className="font-display text-lg font-semibold text-foreground">
+          <h3 className="font-display text-base font-semibold text-foreground sm:text-lg">
             {car.year} Mazda {car.model}
           </h3>
           <p className="mt-1 text-sm text-muted-foreground line-clamp-2">
@@ -71,8 +71,8 @@ export function CarCard({ car }: CarCardProps) {
           )}
         </div>
 
-        <div className="mt-4 flex items-center justify-between border-t pt-4">
-          <span className="font-display text-xl font-bold text-primary">{formatPrice(car.price)}</span>
+        <div className="mt-3 flex items-center justify-between border-t pt-3 sm:mt-4 sm:pt-4">
+          <span className="font-display text-lg font-bold text-primary sm:text-xl">{formatPrice(car.price)}</span>
           {car.condition === 'excellent' && (
             <span className="flex items-center gap-1 text-xs text-muted-foreground">
               <CheckCircle2 className="h-3.5 w-3.5 text-primary" />

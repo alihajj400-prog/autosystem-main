@@ -45,18 +45,17 @@ export default function CarDetailPage() {
   const whatsappMessage = encodeURIComponent(`Hi, I'm interested in the ${carName} listed on your website.`);
 
   return (
-    <div className="animate-fade-in py-8">
+    <div className="animate-fade-in py-6 sm:py-8">
       <div className="container mx-auto px-4">
-        {/* Breadcrumb */}
         <Link
           to="/inventory"
-          className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
+          className="mb-4 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground sm:mb-6"
         >
           <ArrowLeft className="h-4 w-4" />
           Back to Inventory
         </Link>
 
-        <div className="grid gap-10 lg:grid-cols-[1fr_400px]">
+        <div className="grid gap-8 lg:grid-cols-[1fr_380px] lg:gap-10">
           {/* Main Content */}
           <div>
             {/* Gallery */}
@@ -94,7 +93,7 @@ export default function CarDetailPage() {
             </div>
 
             {/* Quick Specs */}
-            <div className="mt-6 flex flex-wrap gap-4 rounded-lg border bg-card p-4">
+            <div className="mt-6 flex flex-wrap gap-3 rounded-lg border bg-card p-3 sm:gap-4 sm:p-4">
               <div className="flex items-center gap-2">
                 <Calendar className="h-4 w-4 text-muted-foreground" />
                 <span className="text-sm">{car.year}</span>
@@ -201,7 +200,7 @@ export default function CarDetailPage() {
           </div>
 
           {/* Sidebar */}
-          <div className="lg:sticky lg:top-24 lg:self-start space-y-6">
+          <div className="lg:sticky lg:top-24 lg:self-start space-y-6 min-w-0">
             {/* Title & Price (Desktop) */}
             <div className="hidden lg:block">
               <div className="flex flex-wrap gap-2 mb-2">
@@ -233,8 +232,8 @@ export default function CarDetailPage() {
             <Separator className="hidden lg:block" />
 
             {/* Contact Form */}
-            <div className="rounded-lg border bg-card p-6">
-              <h3 className="mb-4 font-display text-lg font-semibold">Interested in this vehicle?</h3>
+            <div className="rounded-lg border bg-card p-4 sm:p-6">
+              <h3 className="mb-4 font-display text-base font-semibold sm:text-lg">Interested in this vehicle?</h3>
               <ContactForm carId={car.id} carName={carName} />
             </div>
           </div>
@@ -244,7 +243,7 @@ export default function CarDetailPage() {
         {similarCars && similarCars.length > 0 && (
           <div className="mt-16">
             <h2 className="mb-8 font-display text-2xl font-bold">Similar Vehicles</h2>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
               {similarCars.map((c) => (
                 <CarCard key={c.id} car={c} />
               ))}

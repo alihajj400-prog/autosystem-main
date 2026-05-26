@@ -5,10 +5,10 @@ import { BUSINESS } from '@/lib/constants';
 
 export default function ContactPage() {
   return (
-    <div className="animate-fade-in py-12">
+    <div className="animate-fade-in py-8 sm:py-12">
       <div className="container mx-auto px-4">
-        <div className="mb-12 text-center">
-          <h1 className="font-display text-3xl font-bold sm:text-4xl">Contact Us</h1>
+        <div className="mb-8 text-center sm:mb-12">
+          <h1 className="font-display text-2xl font-bold sm:text-3xl md:text-4xl">Contact Us</h1>
           <p className="mt-4 text-muted-foreground">
             Visit our showroom in {BUSINESS.city}, call us, or send a message via WhatsApp.
           </p>
@@ -40,9 +40,8 @@ export default function ContactPage() {
           </div>
         </div>
 
-        <div className="grid gap-12 lg:grid-cols-2">
-          {/* Contact Form */}
-          <div className="rounded-lg border bg-card p-8">
+        <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
+          <div className="rounded-lg border bg-card p-5 sm:p-8">
             <h2 className="mb-6 font-display text-xl font-semibold">Send us a message</h2>
             <ContactForm />
           </div>

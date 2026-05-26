@@ -47,8 +47,8 @@ export default function HomePage() {
       {/* Value Props */}
       <section className="border-b bg-card section-padding">
         <div className="container mx-auto px-4">
-          <div className="grid gap-8 md:grid-cols-3">
-            <div className="flex items-start gap-4 rounded-xl border bg-background/60 p-6 card-shadow">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 md:grid-cols-3 md:gap-8">
+            <div className="flex items-start gap-4 rounded-xl border bg-background/60 p-4 card-shadow sm:p-6">
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10">
                 <Shield className="h-6 w-6 text-primary" />
               </div>
@@ -59,7 +59,7 @@ export default function HomePage() {
                 </p>
               </div>
             </div>
-            <div className="flex items-start gap-4 rounded-xl border bg-background/60 p-6 card-shadow">
+            <div className="flex items-start gap-4 rounded-xl border bg-background/60 p-4 card-shadow sm:p-6">
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10">
                 <Award className="h-6 w-6 text-primary" />
               </div>
@@ -70,7 +70,7 @@ export default function HomePage() {
                 </p>
               </div>
             </div>
-            <div className="flex items-start gap-4 rounded-xl border bg-background/60 p-6 card-shadow">
+            <div className="flex items-start gap-4 rounded-xl border bg-background/60 p-4 card-shadow sm:p-6">
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10">
                 <Wrench className="h-6 w-6 text-primary" />
               </div>
@@ -175,7 +175,7 @@ export default function HomePage() {
               Join hundreds of satisfied Mazda owners across Lebanon
             </p>
           </div>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
             {TESTIMONIALS.map((t, i) => (
               <div key={i} className="rounded-lg border bg-background p-6">
                 <div className="mb-3 flex gap-0.5">

@@ -8,8 +8,8 @@ export function Footer() {
 
   return (
     <footer className="bg-secondary text-secondary-foreground">
-      <div className="container mx-auto px-4 py-16">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
+      <div className="container mx-auto px-4 py-10 sm:py-16">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-10 lg:grid-cols-4 lg:gap-12">
           <div>
             <BrandLogo variant="light" showTagline={false} imageClassName="h-14 w-14" />
             <p className="mt-4 font-display text-lg font-semibold">Auto System S.A.L.</p>
@@ -132,7 +132,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-secondary-foreground/10 pt-8 text-center text-sm text-secondary-foreground/50">
+        <div className="mt-8 border-t border-secondary-foreground/10 pt-6 text-center text-xs text-secondary-foreground/50 sm:mt-12 sm:pt-8 sm:text-sm">
           <p>
             &copy; {currentYear} Auto System S.A.L. — {BUSINESS.city}, {BUSINESS.country}. All
             rights reserved.

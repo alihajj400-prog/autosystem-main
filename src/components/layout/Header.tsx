@@ -62,7 +62,7 @@ export function Header() {
       )}
     >
       <div className="container mx-auto px-4 md:px-6">
-        <div className="flex h-[4.75rem] items-center justify-between gap-4">
+        <div className="flex h-16 items-center justify-between gap-2 sm:h-[4.75rem] sm:gap-4">
           <BrandLogo variant={overlay ? 'light' : 'dark'} />
 
           <nav className="hidden items-center gap-6 lg:gap-8 md:flex">
