@@ -28,11 +28,11 @@ export function ImageGallery({ images, alt }: ImageGalleryProps) {
 
   return (
     <div className="space-y-3">
-      <div className="relative flex items-center justify-center overflow-hidden rounded-xl bg-neutral-950">
+      <div className="relative overflow-hidden rounded-xl bg-neutral-100">
         <img
           src={images[currentIndex]}
           alt={`${alt} - Image ${currentIndex + 1}`}
-          className="max-h-[75vh] w-full object-contain"
+          className="mx-auto block max-h-[70vh] rounded-xl object-scale-down"
         />
 
         {images.length > 1 && (
@@ -40,7 +40,7 @@ export function ImageGallery({ images, alt }: ImageGalleryProps) {
             <Button
               variant="secondary"
               size="icon"
-              className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-black/50 text-white opacity-80 hover:bg-black/70 hover:opacity-100"
+              className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-black/50 text-white opacity-80 shadow-lg hover:bg-black/70 hover:opacity-100"
               onClick={goToPrevious}
             >
               <ChevronLeft className="h-5 w-5" />
@@ -48,7 +48,7 @@ export function ImageGallery({ images, alt }: ImageGalleryProps) {
             <Button
               variant="secondary"
               size="icon"
-              className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-black/50 text-white opacity-80 hover:bg-black/70 hover:opacity-100"
+              className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-black/50 text-white opacity-80 shadow-lg hover:bg-black/70 hover:opacity-100"
               onClick={goToNext}
             >
               <ChevronRight className="h-5 w-5" />
