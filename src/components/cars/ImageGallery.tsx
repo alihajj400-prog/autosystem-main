@@ -12,7 +12,7 @@ export function ImageGallery({ images, alt }: ImageGalleryProps) {
 
   if (!images || images.length === 0) {
     return (
-      <div className="flex aspect-[16/10] items-center justify-center rounded-lg bg-muted">
+      <div className="flex aspect-video items-center justify-center rounded-lg bg-muted">
         <span className="text-muted-foreground">No images available</span>
       </div>
     );
@@ -27,21 +27,20 @@ export function ImageGallery({ images, alt }: ImageGalleryProps) {
   };
 
   return (
-    <div className="space-y-4">
-      {/* Main Image */}
-      <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-neutral-950">
+    <div className="space-y-3">
+      <div className="relative flex items-center justify-center overflow-hidden rounded-xl bg-neutral-950">
         <img
           src={images[currentIndex]}
           alt={`${alt} - Image ${currentIndex + 1}`}
-          className="h-full w-full object-contain"
+          className="max-h-[75vh] w-full object-contain"
         />
-        
+
         {images.length > 1 && (
           <>
             <Button
               variant="secondary"
               size="icon"
-              className="absolute left-4 top-1/2 -translate-y-1/2 opacity-80 hover:opacity-100"
+              className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-black/50 text-white opacity-80 hover:bg-black/70 hover:opacity-100"
               onClick={goToPrevious}
             >
               <ChevronLeft className="h-5 w-5" />
@@ -49,31 +48,29 @@ export function ImageGallery({ images, alt }: ImageGalleryProps) {
             <Button
               variant="secondary"
               size="icon"
-              className="absolute right-4 top-1/2 -translate-y-1/2 opacity-80 hover:opacity-100"
+              className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-black/50 text-white opacity-80 hover:bg-black/70 hover:opacity-100"
               onClick={goToNext}
             >
               <ChevronRight className="h-5 w-5" />
             </Button>
-            
-            {/* Image Counter */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-full bg-secondary/80 px-3 py-1 text-sm text-secondary-foreground">
+
+            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-black/60 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
               {currentIndex + 1} / {images.length}
             </div>
           </>
         )}
       </div>
 
-      {/* Thumbnails */}
       {images.length > 1 && (
-        <div className="flex gap-2 overflow-x-auto pb-2">
+        <div className="flex gap-2 overflow-x-auto pb-1">
           {images.map((image, index) => (
             <button
               key={index}
               onClick={() => setCurrentIndex(index)}
-              className={`relative aspect-video w-24 flex-shrink-0 overflow-hidden rounded-md transition-all ${
+              className={`relative aspect-[4/3] w-20 flex-shrink-0 overflow-hidden rounded-md transition-all sm:w-24 ${
                 index === currentIndex
                   ? 'ring-2 ring-primary ring-offset-2'
-                  : 'opacity-70 hover:opacity-100'
+                  : 'opacity-60 hover:opacity-100'
               }`}
             >
               <img
