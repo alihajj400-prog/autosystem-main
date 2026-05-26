@@ -29,7 +29,7 @@ export default function AboutPage() {
                 Over the years, we've built our reputation on transparency, thorough inspections, and genuine care for our customers. Every car that enters our showroom undergoes a comprehensive 150+ point inspection by our Mazda-trained technicians before it's offered for sale.
               </p>
               <p>
-                We specialize exclusively in Mazda because we know the brand inside and out. This focus allows us to offer expert advice, ensure quality, and provide a buying experience that generic dealerships simply can't match.
+                We specialize exclusively in Mazda because we know the brand inside and out. This focus allows us to offer expert advice, ensure quality, and provide a buying experience that other sellers simply can't match.
               </p>
             </div>
           </div>

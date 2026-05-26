@@ -24,7 +24,7 @@ const TESTIMONIALS = [
   {
     name: 'Georges M.',
     location: 'Dbayeh',
-    text: 'Best used car dealership in Lebanon for Mazda. Transparent pricing, no hidden fees. My CX-30 runs like new.',
+    text: 'Best place in Lebanon for used Mazdas. Transparent pricing, no hidden fees. My CX-30 runs like new.',
     rating: 5,
   },
   {

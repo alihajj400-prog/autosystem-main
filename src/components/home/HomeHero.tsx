@@ -20,7 +20,7 @@ export function HomeHero() {
           </div>
 
           <h1 className="font-display text-4xl font-bold leading-[1.08] text-white sm:text-5xl md:text-6xl lg:text-7xl">
-            Premium Mazda Dealership
+            Premium Car Showroom
             <span className="mt-2 block text-primary">in {BUSINESS.country}</span>
           </h1>
 
