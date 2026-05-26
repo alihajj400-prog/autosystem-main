@@ -29,11 +29,11 @@ export function ImageGallery({ images, alt }: ImageGalleryProps) {
   return (
     <div className="space-y-4">
       {/* Main Image */}
-      <div className="relative aspect-[16/10] overflow-hidden rounded-lg bg-muted">
+      <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-neutral-950">
         <img
           src={images[currentIndex]}
           alt={`${alt} - Image ${currentIndex + 1}`}
-          className="h-full w-full object-cover"
+          className="h-full w-full object-contain"
         />
         
         {images.length > 1 && (
