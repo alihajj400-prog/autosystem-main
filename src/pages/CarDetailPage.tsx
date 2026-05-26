@@ -55,9 +55,8 @@ export default function CarDetailPage() {
           Back to Inventory
         </Link>
 
-        <div className="grid gap-8 lg:grid-cols-[1fr_380px] lg:gap-10">
-          {/* Main Content */}
-          <div>
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_340px] xl:grid-cols-[minmax(0,1fr)_380px] lg:gap-10">
+          <div className="min-w-0">
             {/* Gallery */}
             <ImageGallery images={car.images || []} alt={carName} />
 
