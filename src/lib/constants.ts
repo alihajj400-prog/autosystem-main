@@ -2,8 +2,8 @@
 export const BUSINESS = {
   name: 'Autosystem',
   tagline: 'Premium Used Mazda Vehicles in Lebanon',
-  phone: '+961 03 750 078',
-  whatsapp: '+96103750078',
+  phone: '+961 78 740 074',
+  whatsapp: '96178740074',
   email: 'info@autosystemsal.com',
   address: 'Zarif, Beirut, Lebanon',
   city: 'Beirut',
@@ -17,7 +17,7 @@ export const BUSINESS = {
   social: {
     instagram: 'https://www.instagram.com/autosystem.s.a.l/',
     facebook: 'https://www.facebook.com/autosystemsal/',
-    whatsappLink: 'https://wa.me/96103750078',
+    whatsappLink: 'https://wa.me/96178740074',
   },
 } as const;
 
