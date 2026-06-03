@@ -14,7 +14,6 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
-import { Badge } from '@/components/ui/badge';
 import {
   Select,
   SelectContent,
@@ -24,6 +23,8 @@ import {
 } from '@/components/ui/select';
 import { toast } from 'sonner';
 import { ArrowLeft, Loader2, Upload, X } from 'lucide-react';
+import { MultiSelectOrInput } from '@/components/admin/MultiSelectOrInput';
+import { SelectOrInput } from '@/components/admin/SelectOrInput';
 import { MAZDA_MODELS, PART_CATEGORIES } from '@/lib/constants';
 
 const partSchema = z.object({
@@ -117,12 +118,6 @@ export default function PartFormPage() {
     },
     [uploadImage]
   );
-
-  const toggleModel = (model: string) => {
-    setCompatibleModels((prev) =>
-      prev.includes(model) ? prev.filter((m) => m !== model) : [...prev, model]
-    );
-  };
 
   const onSubmit = async (data: PartFormData) => {
     try {
@@ -221,24 +216,16 @@ export default function PartFormPage() {
             </Select>
           </div>
 
-          <div>
-            <Label>Category *</Label>
-            <Select value={watch('category')} onValueChange={(v) => setValue('category', v)}>
-              <SelectTrigger className="mt-1.5">
-                <SelectValue placeholder="Select category" />
-              </SelectTrigger>
-              <SelectContent>
-                {PART_CATEGORIES.map((cat) => (
-                  <SelectItem key={cat} value={cat}>
-                    {cat}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            {errors.category && (
-              <p className="mt-1 text-sm text-destructive">{errors.category.message}</p>
-            )}
-          </div>
+          <SelectOrInput
+            label="Category"
+            required
+            value={watch('category')}
+            onChange={(value) => setValue('category', value, { shouldValidate: true })}
+            options={PART_CATEGORIES}
+            placeholder="Type a custom category"
+            selectPlaceholder="Or select a category"
+            error={errors.category?.message}
+          />
 
           <div>
             <Label htmlFor="price">Price (USD) *</Label>
@@ -294,21 +281,13 @@ export default function PartFormPage() {
           </div>
         </div>
 
-        <div>
-          <Label className="text-base font-semibold">Compatible Mazda models</Label>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {MAZDA_MODELS.map((model) => (
-              <Badge
-                key={model}
-                variant={compatibleModels.includes(model) ? 'default' : 'outline'}
-                className="cursor-pointer"
-                onClick={() => toggleModel(model)}
-              >
-                {model}
-              </Badge>
-            ))}
-          </div>
-        </div>
+        <MultiSelectOrInput
+          label="Compatible models"
+          description="Select common Mazda models or add any custom model name."
+          value={compatibleModels}
+          onChange={setCompatibleModels}
+          options={MAZDA_MODELS}
+        />
 
         <div>
           <Label htmlFor="short_description">Short description *</Label>

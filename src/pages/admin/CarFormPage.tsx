@@ -20,6 +20,7 @@ import {
 import { toast } from 'sonner';
 import { ArrowLeft, Loader2, Upload, X, Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { SelectOrInput } from '@/components/admin/SelectOrInput';
 import { MAZDA_MODELS, LEBANESE_CITIES } from '@/lib/constants';
 
 const carSchema = z.object({
@@ -282,27 +283,17 @@ export default function CarFormPage() {
 
         {/* Basic Info */}
         <div className="grid gap-6 sm:grid-cols-2">
-          <div>
-            <Label htmlFor="model">Model *</Label>
-            <Select
-              value={watch('model')}
-              onValueChange={(value) => setValue('model', value)}
-            >
-              <SelectTrigger className="mt-1.5">
-                <SelectValue placeholder="Select model" />
-              </SelectTrigger>
-              <SelectContent>
-                {MAZDA_MODELS.map((model) => (
-                  <SelectItem key={model} value={model}>
-                    Mazda {model}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            {errors.model && (
-              <p className="mt-1 text-sm text-destructive">{errors.model.message}</p>
-            )}
-          </div>
+          <SelectOrInput
+            label="Model"
+            required
+            value={watch('model')}
+            onChange={(value) => setValue('model', value, { shouldValidate: true })}
+            options={MAZDA_MODELS}
+            placeholder="e.g., CX-5, Camaro, 3 Series..."
+            selectPlaceholder="Or select a common Mazda model"
+            formatOption={(model) => `Mazda ${model}`}
+            error={errors.model?.message}
+          />
 
           <div>
             <Label htmlFor="trim">Trim (optional)</Label>
@@ -427,24 +418,14 @@ export default function CarFormPage() {
             </Select>
           </div>
 
-          <div>
-            <Label htmlFor="location">Location</Label>
-            <Select
-              value={watch('location') || ''}
-              onValueChange={(value) => setValue('location', value)}
-            >
-              <SelectTrigger className="mt-1.5">
-                <SelectValue placeholder="Select city" />
-              </SelectTrigger>
-              <SelectContent>
-                {LEBANESE_CITIES.map((city) => (
-                  <SelectItem key={city} value={city}>
-                    {city}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+          <SelectOrInput
+            label="Location"
+            value={watch('location') || ''}
+            onChange={(value) => setValue('location', value)}
+            options={LEBANESE_CITIES}
+            placeholder="Type a custom city or area"
+            selectPlaceholder="Or select a city"
+          />
 
           <div>
             <Label htmlFor="status">Status *</Label>
