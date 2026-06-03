@@ -26,7 +26,7 @@ export function HomeHero() {
 
           <p className="mt-4 max-w-xl text-base leading-relaxed text-white/75 sm:mt-6 sm:text-lg md:text-xl">
             Own your next Mazda with inspected quality, transparent USD pricing, and genuine parts
-            & screens — {BUSINESS.city}&apos;s dedicated Mazda partner.
+            & screens.
           </p>
 
           <div className="mt-6 flex flex-wrap items-center gap-3 sm:mt-10 sm:gap-4">
