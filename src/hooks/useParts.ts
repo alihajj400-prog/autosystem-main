@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { compressImageFile } from '@/lib/images';
 import { Part, PartFilters } from '@/types/part';
 
 function normalizePart(row: Record<string, unknown>): Part {
@@ -155,11 +156,12 @@ export function useDeletePart() {
 export function useUploadPartImage() {
   return useMutation({
     mutationFn: async (file: File) => {
-      const fileExt = file.name.split('.').pop();
+      const compressed = await compressImageFile(file);
+      const fileExt = compressed.name.split('.').pop();
       const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
       const filePath = `parts/${fileName}`;
 
-      const { error: uploadError } = await supabase.storage.from('part-images').upload(filePath, file);
+      const { error: uploadError } = await supabase.storage.from('part-images').upload(filePath, compressed);
       if (uploadError) throw uploadError;
 
       const {

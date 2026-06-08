@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { compressImageFile } from '@/lib/images';
 import { Car, CarFilters } from '@/types/car';
 
 export function useCars(filters?: CarFilters) {
@@ -276,13 +277,14 @@ export function useDeleteCar() {
 export function useUploadCarImage() {
   return useMutation({
     mutationFn: async (file: File) => {
-      const fileExt = file.name.split('.').pop();
+      const compressed = await compressImageFile(file);
+      const fileExt = compressed.name.split('.').pop();
       const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
       const filePath = `cars/${fileName}`;
 
       const { error: uploadError } = await supabase.storage
         .from('car-images')
-        .upload(filePath, file);
+        .upload(filePath, compressed);
 
       if (uploadError) throw uploadError;
 

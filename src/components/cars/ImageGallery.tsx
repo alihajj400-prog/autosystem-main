@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight, Expand, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { OptimizedImage } from '@/components/ui/OptimizedImage';
+import { getOptimizedImageUrl } from '@/lib/images';
 
 interface ImageGalleryProps {
   images: string[];
@@ -10,6 +12,7 @@ interface ImageGalleryProps {
 export function ImageGallery({ images, alt }: ImageGalleryProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [fullscreen, setFullscreen] = useState(false);
+  const [fullscreenSrc, setFullscreenSrc] = useState('');
 
   if (!images || images.length === 0) {
     return (
@@ -27,20 +30,28 @@ export function ImageGallery({ images, alt }: ImageGalleryProps) {
     setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
   };
 
+  const openFullscreen = () => {
+    setFullscreenSrc(getOptimizedImageUrl(images[currentIndex], { width: 1600, quality: 85 }));
+    setFullscreen(true);
+  };
+
   return (
     <>
       <div className="space-y-3">
-        {/* Main image — fixed aspect container prevents oversized rendering */}
         <div
           className="relative cursor-pointer overflow-hidden rounded-xl bg-neutral-100"
           style={{ maxHeight: 'calc(100vh - 160px)' }}
-          onClick={() => setFullscreen(true)}
+          onClick={openFullscreen}
         >
           <div className="relative aspect-[4/3] w-full">
-            <img
+            <OptimizedImage
+              key={currentIndex}
               src={images[currentIndex]}
               alt={`${alt} - Image ${currentIndex + 1}`}
-              className="absolute inset-0 h-full w-full object-contain"
+              width={1200}
+              quality={80}
+              priority
+              className="absolute inset-0 object-contain"
             />
           </div>
 
@@ -74,23 +85,24 @@ export function ImageGallery({ images, alt }: ImageGalleryProps) {
           )}
         </div>
 
-        {/* Thumbnails */}
         {images.length > 1 && (
           <div className="flex gap-2 overflow-x-auto pb-1">
             {images.map((image, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentIndex(index)}
-                className={`relative aspect-[4/3] w-16 flex-shrink-0 overflow-hidden rounded-md transition-all sm:w-20 md:w-24 ${
+                className={`relative aspect-[4/3] w-16 flex-shrink-0 overflow-hidden rounded-md bg-muted transition-all sm:w-20 md:w-24 ${
                   index === currentIndex
                     ? 'ring-2 ring-primary ring-offset-2'
                     : 'opacity-60 hover:opacity-100'
                 }`}
               >
-                <img
+                <OptimizedImage
                   src={image}
                   alt={`${alt} thumbnail ${index + 1}`}
-                  className="h-full w-full object-cover"
+                  width={120}
+                  quality={70}
+                  className="object-cover"
                 />
               </button>
             ))}
@@ -98,7 +110,6 @@ export function ImageGallery({ images, alt }: ImageGalleryProps) {
         )}
       </div>
 
-      {/* Fullscreen overlay — click image to see full detail */}
       {fullscreen && (
         <div
           className="fixed inset-0 z-[200] flex items-center justify-center bg-black/95 p-4"
@@ -109,10 +120,11 @@ export function ImageGallery({ images, alt }: ImageGalleryProps) {
           </button>
 
           <img
-            src={images[currentIndex]}
+            src={fullscreenSrc}
             alt={`${alt} - Image ${currentIndex + 1}`}
             className="max-h-[90vh] max-w-[95vw] object-contain"
             onClick={(e) => e.stopPropagation()}
+            onError={() => setFullscreenSrc(images[currentIndex])}
           />
 
           {images.length > 1 && (

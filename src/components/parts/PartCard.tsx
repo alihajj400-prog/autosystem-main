@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { formatPrice } from '@/lib/format';
 import { BUSINESS } from '@/lib/constants';
+import { OptimizedImage } from '@/components/ui/OptimizedImage';
 
 interface PartCardProps {
   part: Part;
@@ -19,11 +20,12 @@ export function PartCard({ part }: PartCardProps) {
     <article className="group flex h-full flex-col overflow-hidden rounded-xl border bg-card card-shadow transition-all duration-300 hover:card-shadow-hover hover-lift">
       <Link to={`/parts/${part.id}`} className="relative aspect-[4/3] overflow-hidden bg-muted">
         {part.images.length > 0 ? (
-          <img
+          <OptimizedImage
             src={part.images[0]}
             alt={part.name}
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-            loading="lazy"
+            width={640}
+            quality={75}
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center text-muted-foreground">
