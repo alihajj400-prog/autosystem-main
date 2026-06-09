@@ -5,12 +5,14 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { formatPrice } from '@/lib/format';
 import { BUSINESS } from '@/lib/constants';
+import { SiteImage } from '@/components/ui/SiteImage';
 
 interface PartCardProps {
   part: Part;
+  priority?: boolean;
 }
 
-export function PartCard({ part }: PartCardProps) {
+export function PartCard({ part, priority = false }: PartCardProps) {
   const whatsappMessage = encodeURIComponent(
     `Hi, I'm interested in the ${part.name} (${part.category}) listed on Autosystem.`
   );
@@ -19,11 +21,15 @@ export function PartCard({ part }: PartCardProps) {
     <article className="group flex h-full flex-col overflow-hidden rounded-xl border bg-card card-shadow transition-all duration-300 hover:card-shadow-hover hover-lift">
       <Link to={`/parts/${part.id}`} className="relative aspect-[4/3] overflow-hidden bg-muted">
         {part.images.length > 0 ? (
-          <img
+          <SiteImage
             src={part.images[0]}
             alt={part.name}
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-            loading="lazy"
+            optimizedWidth={720}
+            quality={78}
+            priority={priority}
+            width={640}
+            height={480}
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center text-muted-foreground">

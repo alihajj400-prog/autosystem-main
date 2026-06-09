@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight, Expand, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { SiteImage } from '@/components/ui/SiteImage';
 
 interface ImageGalleryProps {
   images: string[];
@@ -30,17 +31,22 @@ export function ImageGallery({ images, alt }: ImageGalleryProps) {
   return (
     <>
       <div className="space-y-3">
-        {/* Main image — fixed aspect container prevents oversized rendering */}
         <div
           className="relative cursor-pointer overflow-hidden rounded-xl bg-neutral-100"
           style={{ maxHeight: 'calc(100vh - 160px)' }}
           onClick={() => setFullscreen(true)}
         >
           <div className="relative aspect-[4/3] w-full">
-            <img
+            <SiteImage
+              key={currentIndex}
               src={images[currentIndex]}
               alt={`${alt} - Image ${currentIndex + 1}`}
-              className="absolute inset-0 h-full w-full object-contain"
+              optimizedWidth={1200}
+              quality={82}
+              priority
+              width={1200}
+              height={900}
+              className="absolute inset-0 object-contain"
             />
           </div>
 
@@ -74,23 +80,26 @@ export function ImageGallery({ images, alt }: ImageGalleryProps) {
           )}
         </div>
 
-        {/* Thumbnails */}
         {images.length > 1 && (
           <div className="flex gap-2 overflow-x-auto pb-1">
             {images.map((image, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentIndex(index)}
-                className={`relative aspect-[4/3] w-16 flex-shrink-0 overflow-hidden rounded-md transition-all sm:w-20 md:w-24 ${
+                className={`relative aspect-[4/3] w-16 flex-shrink-0 overflow-hidden rounded-md bg-muted transition-all sm:w-20 md:w-24 ${
                   index === currentIndex
                     ? 'ring-2 ring-primary ring-offset-2'
                     : 'opacity-60 hover:opacity-100'
                 }`}
               >
-                <img
+                <SiteImage
                   src={image}
                   alt={`${alt} thumbnail ${index + 1}`}
-                  className="h-full w-full object-cover"
+                  optimizedWidth={160}
+                  quality={70}
+                  width={96}
+                  height={72}
+                  className="object-cover"
                 />
               </button>
             ))}
@@ -98,7 +107,6 @@ export function ImageGallery({ images, alt }: ImageGalleryProps) {
         )}
       </div>
 
-      {/* Fullscreen overlay — click image to see full detail */}
       {fullscreen && (
         <div
           className="fixed inset-0 z-[200] flex items-center justify-center bg-black/95 p-4"
@@ -112,6 +120,7 @@ export function ImageGallery({ images, alt }: ImageGalleryProps) {
             src={images[currentIndex]}
             alt={`${alt} - Image ${currentIndex + 1}`}
             className="max-h-[90vh] max-w-[95vw] object-contain"
+            decoding="async"
             onClick={(e) => e.stopPropagation()}
           />
 

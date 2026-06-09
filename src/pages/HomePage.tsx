@@ -103,8 +103,8 @@ export default function HomePage() {
             </div>
           ) : featuredCars && featuredCars.length > 0 ? (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {featuredCars.map((car) => (
-                <CarCard key={car.id} car={car} />
+              {featuredCars.map((car, index) => (
+                <CarCard key={car.id} car={car} priority={index === 0} />
               ))}
             </div>
           ) : (
@@ -151,8 +151,8 @@ export default function HomePage() {
             </div>
           ) : featuredParts && featuredParts.length > 0 ? (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {featuredParts.map((part) => (
-                <PartCard key={part.id} part={part} />
+              {featuredParts.map((part, index) => (
+                <PartCard key={part.id} part={part} priority={index === 0} />
               ))}
             </div>
           ) : (

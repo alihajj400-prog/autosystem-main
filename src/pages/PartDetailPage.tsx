@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { formatPrice } from '@/lib/format';
 import { BUSINESS } from '@/lib/constants';
+import { SiteImage } from '@/components/ui/SiteImage';
 
 export default function PartDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -52,9 +53,18 @@ export default function PartDetailPage() {
                 {part.images.map((img, i) => (
                   <div
                     key={i}
-                    className={`overflow-hidden rounded-xl border bg-muted ${i === 0 ? 'sm:col-span-2 aspect-video' : 'aspect-square'}`}
+                    className={`relative overflow-hidden rounded-xl border bg-muted ${i === 0 ? 'sm:col-span-2 aspect-video' : 'aspect-square'}`}
                   >
-                    <img src={img} alt={`${part.name} ${i + 1}`} className="h-full w-full object-cover" />
+                    <SiteImage
+                      src={img}
+                      alt={`${part.name} ${i + 1}`}
+                      optimizedWidth={i === 0 ? 960 : 480}
+                      quality={80}
+                      priority={i === 0}
+                      width={i === 0 ? 960 : 480}
+                      height={i === 0 ? 540 : 480}
+                      className="object-cover"
+                    />
                   </div>
                 ))}
               </div>
