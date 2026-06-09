@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight, Expand, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SiteImage } from '@/components/ui/SiteImage';
@@ -8,9 +8,12 @@ interface ImageGalleryProps {
   alt: string;
 }
 
+const SWIPE_THRESHOLD = 50;
+
 export function ImageGallery({ images, alt }: ImageGalleryProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [fullscreen, setFullscreen] = useState(false);
+  const touchStartX = useRef<number | null>(null);
 
   if (!images || images.length === 0) {
     return (
@@ -27,6 +30,40 @@ export function ImageGallery({ images, alt }: ImageGalleryProps) {
   const goToNext = () => {
     setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
   };
+
+  const handleSwipeStart = (clientX: number) => {
+    touchStartX.current = clientX;
+  };
+
+  const handleSwipeEnd = (clientX: number) => {
+    if (touchStartX.current === null || images.length <= 1) return;
+
+    const deltaX = clientX - touchStartX.current;
+    if (deltaX > SWIPE_THRESHOLD) {
+      goToPrevious();
+    } else if (deltaX < -SWIPE_THRESHOLD) {
+      goToNext();
+    }
+
+    touchStartX.current = null;
+  };
+
+  useEffect(() => {
+    if (!fullscreen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'ArrowLeft') {
+        setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+      }
+      if (event.key === 'ArrowRight') {
+        setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+      }
+      if (event.key === 'Escape') setFullscreen(false);
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [fullscreen, images.length]);
 
   return (
     <>
@@ -116,13 +153,26 @@ export function ImageGallery({ images, alt }: ImageGalleryProps) {
             <X className="h-6 w-6" />
           </button>
 
-          <img
-            src={images[currentIndex]}
-            alt={`${alt} - Image ${currentIndex + 1}`}
-            className="max-h-[90vh] max-w-[95vw] object-contain"
-            decoding="async"
+          <div
+            className="flex max-h-[90vh] max-w-[95vw] touch-pan-y items-center justify-center"
             onClick={(e) => e.stopPropagation()}
-          />
+            onTouchStart={(e) => handleSwipeStart(e.touches[0].clientX)}
+            onTouchEnd={(e) => handleSwipeEnd(e.changedTouches[0].clientX)}
+            onPointerDown={(e) => {
+              if (e.pointerType === 'mouse') handleSwipeStart(e.clientX);
+            }}
+            onPointerUp={(e) => {
+              if (e.pointerType === 'mouse') handleSwipeEnd(e.clientX);
+            }}
+          >
+            <img
+              src={images[currentIndex]}
+              alt={`${alt} - Image ${currentIndex + 1}`}
+              className="max-h-[90vh] max-w-[95vw] select-none object-contain"
+              decoding="async"
+              draggable={false}
+            />
+          </div>
 
           {images.length > 1 && (
             <>
