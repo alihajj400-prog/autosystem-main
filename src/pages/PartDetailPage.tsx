@@ -5,7 +5,6 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { formatPrice } from '@/lib/format';
 import { BUSINESS } from '@/lib/constants';
-import { OptimizedImage } from '@/components/ui/OptimizedImage';
 
 export default function PartDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -55,14 +54,7 @@ export default function PartDetailPage() {
                     key={i}
                     className={`overflow-hidden rounded-xl border bg-muted ${i === 0 ? 'sm:col-span-2 aspect-video' : 'aspect-square'}`}
                   >
-                    <OptimizedImage
-                      src={img}
-                      alt={`${part.name} ${i + 1}`}
-                      width={i === 0 ? 1000 : 500}
-                      quality={80}
-                      priority={i === 0}
-                      className="object-cover"
-                    />
+                    <img src={img} alt={`${part.name} ${i + 1}`} className="h-full w-full object-cover" />
                   </div>
                 ))}
               </div>

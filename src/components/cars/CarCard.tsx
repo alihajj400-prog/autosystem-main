@@ -3,14 +3,12 @@ import { Car } from '@/types/car';
 import { Badge } from '@/components/ui/badge';
 import { Fuel, Gauge, Settings, MapPin, CheckCircle2 } from 'lucide-react';
 import { formatPrice, formatMileage } from '@/lib/format';
-import { OptimizedImage } from '@/components/ui/OptimizedImage';
 
 interface CarCardProps {
   car: Car;
-  priority?: boolean;
 }
 
-export function CarCard({ car, priority = false }: CarCardProps) {
+export function CarCard({ car }: CarCardProps) {
   return (
     <Link
       to={`/inventory/${car.id}`}
@@ -19,13 +17,11 @@ export function CarCard({ car, priority = false }: CarCardProps) {
       {/* Image */}
       <div className="relative aspect-[4/3] overflow-hidden bg-muted">
         {car.images && car.images.length > 0 ? (
-          <OptimizedImage
+          <img
             src={car.images[0]}
             alt={`${car.year} Mazda ${car.model}`}
-            width={640}
-            quality={75}
-            priority={priority}
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            loading="lazy"
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center">

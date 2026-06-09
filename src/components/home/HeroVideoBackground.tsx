@@ -31,7 +31,7 @@ export function HeroVideoBackground() {
         muted
         loop
         playsInline
-        preload="metadata"
+        preload="auto"
       >
         <source src={HERO_VIDEO} type="video/mp4" />
       </video>

@@ -1,26 +1,3 @@
-interface ImageTransformOptions {
-  width?: number;
-  height?: number;
-  quality?: number;
-}
-
-/** Resize Supabase storage URLs to smaller, web-friendly versions. */
-export function getOptimizedImageUrl(url: string, options: ImageTransformOptions = {}): string {
-  if (!url) return url;
-
-  const objectMatch = url.match(/^(https?:\/\/[^/]+)\/storage\/v1\/object\/public\/(.+)$/);
-  if (!objectMatch) return url;
-
-  const [, base, path] = objectMatch;
-  const params = new URLSearchParams();
-  if (options.width) params.set('width', String(options.width));
-  if (options.height) params.set('height', String(options.height));
-  if (options.quality) params.set('quality', String(options.quality));
-
-  const query = params.toString();
-  return `${base}/storage/v1/render/image/public/${path}${query ? `?${query}` : ''}`;
-}
-
 /** Compress large uploads before sending to storage (helps future listings load faster). */
 export async function compressImageFile(
   file: File,
