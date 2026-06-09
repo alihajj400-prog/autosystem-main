@@ -22,8 +22,8 @@ export function CarCard({ car, priority = false }: CarCardProps) {
           <SiteImage
             src={car.images[0]}
             alt={`${car.year} Mazda ${car.model}`}
-            optimizedWidth={720}
-            quality={78}
+            optimizedWidth={520}
+            quality={68}
             priority={priority}
             width={640}
             height={480}

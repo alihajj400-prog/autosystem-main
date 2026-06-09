@@ -7,10 +7,13 @@ import { Car, FileText, TrendingUp, Calendar, CheckCircle, XCircle, Trash2, Load
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { cleanupOrphanedImages } from '@/lib/storage';
+import { compressAllListingImages } from '@/lib/images';
 import { toast } from 'sonner';
 
 export default function AdminDashboard() {
   const [isCleaningStorage, setIsCleaningStorage] = useState(false);
+  const [isCompressingImages, setIsCompressingImages] = useState(false);
+  const [compressStatus, setCompressStatus] = useState('');
   const { data: cars } = useCars();
   const { data: parts } = useParts();
   
@@ -36,6 +39,27 @@ export default function AdminDashboard() {
   const pendingRequests = requests?.filter((r) => r.status === 'pending').length || 0;
 
   const recentRequests = requests?.slice(0, 5) || [];
+
+  const handleCompressImages = async () => {
+    const confirmed = window.confirm(
+      'This will permanently compress large car and part photos in storage to load faster. It may take several minutes. Continue?'
+    );
+    if (!confirmed) return;
+
+    setIsCompressingImages(true);
+    setCompressStatus('Starting...');
+    try {
+      const result = await compressAllListingImages(setCompressStatus);
+      toast.success(
+        `Done: ${result.optimized} compressed, ${result.skipped} already small, ${result.failed} failed.`
+      );
+    } catch {
+      toast.error('Failed to compress images. Please try again.');
+    } finally {
+      setIsCompressingImages(false);
+      setCompressStatus('');
+    }
+  };
 
   const handleCleanupStorage = async () => {
     setIsCleaningStorage(true);
@@ -139,7 +163,7 @@ export default function AdminDashboard() {
           <Button
             variant="outline"
             onClick={handleCleanupStorage}
-            disabled={isCleaningStorage}
+            disabled={isCleaningStorage || isCompressingImages}
           >
             {isCleaningStorage ? (
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -148,7 +172,20 @@ export default function AdminDashboard() {
             )}
             Clean Unused Images
           </Button>
+          <Button
+            variant="outline"
+            onClick={handleCompressImages}
+            disabled={isCompressingImages || isCleaningStorage}
+          >
+            {isCompressingImages ? (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            ) : null}
+            Compress All Images
+          </Button>
         </div>
+        {compressStatus && (
+          <p className="mt-3 text-sm text-muted-foreground">{compressStatus}</p>
+        )}
         {totalParts > 0 && (
           <p className="mt-3 text-sm text-muted-foreground">{totalParts} parts & screens in catalog</p>
         )}

@@ -24,8 +24,8 @@ export function PartCard({ part, priority = false }: PartCardProps) {
           <SiteImage
             src={part.images[0]}
             alt={part.name}
-            optimizedWidth={720}
-            quality={78}
+            optimizedWidth={520}
+            quality={68}
             priority={priority}
             width={640}
             height={480}

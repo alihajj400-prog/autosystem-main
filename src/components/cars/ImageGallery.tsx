@@ -41,12 +41,12 @@ export function ImageGallery({ images, alt }: ImageGalleryProps) {
               key={currentIndex}
               src={images[currentIndex]}
               alt={`${alt} - Image ${currentIndex + 1}`}
-              optimizedWidth={1200}
-              quality={82}
+              optimizedWidth={900}
+              quality={75}
               priority
               width={1200}
               height={900}
-              className="absolute inset-0 object-contain"
+              className="object-contain"
             />
           </div>
 
