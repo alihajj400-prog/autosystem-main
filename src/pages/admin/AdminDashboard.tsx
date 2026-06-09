@@ -1,12 +1,16 @@
+import { useState } from 'react';
 import { useCars } from '@/hooks/useCars';
 import { useParts } from '@/hooks/useParts';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery } from '@tanstack/react-query';
-import { Car, FileText, TrendingUp, Calendar, CheckCircle, XCircle } from 'lucide-react';
+import { Car, FileText, TrendingUp, Calendar, CheckCircle, XCircle, Trash2, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { cleanupOrphanedImages } from '@/lib/storage';
+import { toast } from 'sonner';
 
 export default function AdminDashboard() {
+  const [isCleaningStorage, setIsCleaningStorage] = useState(false);
   const { data: cars } = useCars();
   const { data: parts } = useParts();
   
@@ -32,6 +36,22 @@ export default function AdminDashboard() {
   const pendingRequests = requests?.filter((r) => r.status === 'pending').length || 0;
 
   const recentRequests = requests?.slice(0, 5) || [];
+
+  const handleCleanupStorage = async () => {
+    setIsCleaningStorage(true);
+    try {
+      const deleted = await cleanupOrphanedImages();
+      toast.success(
+        deleted > 0
+          ? `Removed ${deleted} unused image${deleted === 1 ? '' : 's'} from storage.`
+          : 'No unused images found — storage is already clean.'
+      );
+    } catch {
+      toast.error('Failed to clean up storage. Please try again.');
+    } finally {
+      setIsCleaningStorage(false);
+    }
+  };
 
   return (
     <div className="animate-fade-in">
@@ -116,6 +136,18 @@ export default function AdminDashboard() {
           <Link to="/admin/parts/new">
             <Button variant="outline">Add Part / Screen</Button>
           </Link>
+          <Button
+            variant="outline"
+            onClick={handleCleanupStorage}
+            disabled={isCleaningStorage}
+          >
+            {isCleaningStorage ? (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            ) : (
+              <Trash2 className="mr-2 h-4 w-4" />
+            )}
+            Clean Unused Images
+          </Button>
         </div>
         {totalParts > 0 && (
           <p className="mt-3 text-sm text-muted-foreground">{totalParts} parts & screens in catalog</p>

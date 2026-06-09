@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { compressImageFile } from '@/lib/images';
+import { deleteStorageImages } from '@/lib/storage';
 import { Car, CarFilters } from '@/types/car';
 
 export function useCars(filters?: CarFilters) {
@@ -237,6 +238,20 @@ export function useUpdateCar() {
   
   return useMutation({
     mutationFn: async ({ id, ...car }: Partial<Car> & { id: string }) => {
+      if (car.images !== undefined) {
+        const { data: existing } = await supabase
+          .from('cars')
+          .select('images')
+          .eq('id', id)
+          .single();
+
+        const oldImages = (existing?.images as string[]) ?? [];
+        const removed = oldImages.filter((url) => !car.images!.includes(url));
+        if (removed.length > 0) {
+          await deleteStorageImages(removed);
+        }
+      }
+
       const { data, error } = await supabase
         .from('cars')
         .update(car)
@@ -260,12 +275,19 @@ export function useDeleteCar() {
   
   return useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase
+      const { data: existing } = await supabase
         .from('cars')
-        .delete()
-        .eq('id', id);
-      
+        .select('images')
+        .eq('id', id)
+        .single();
+
+      const { error } = await supabase.from('cars').delete().eq('id', id);
       if (error) throw error;
+
+      const images = (existing?.images as string[]) ?? [];
+      if (images.length > 0) {
+        await deleteStorageImages(images);
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['cars'] });

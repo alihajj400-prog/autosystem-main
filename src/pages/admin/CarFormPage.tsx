@@ -22,6 +22,7 @@ import { ArrowLeft, Loader2, Upload, X, Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SelectOrInput } from '@/components/admin/SelectOrInput';
 import { MAZDA_MODELS, LEBANESE_CITIES } from '@/lib/constants';
+import { deleteStorageImages } from '@/lib/storage';
 
 const carSchema = z.object({
   model: z.string().min(1, 'Model is required'),
@@ -136,8 +137,10 @@ export default function CarFormPage() {
     }
   }, [uploadImage]);
 
-  const removeImage = (index: number) => {
+  const removeImage = async (index: number) => {
+    const url = images[index];
     setImages((prev) => prev.filter((_, i) => i !== index));
+    await deleteStorageImages([url]);
   };
 
   const addSpec = () => {

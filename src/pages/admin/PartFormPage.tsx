@@ -26,6 +26,7 @@ import { ArrowLeft, Loader2, Upload, X } from 'lucide-react';
 import { MultiSelectOrInput } from '@/components/admin/MultiSelectOrInput';
 import { SelectOrInput } from '@/components/admin/SelectOrInput';
 import { MAZDA_MODELS, PART_CATEGORIES } from '@/lib/constants';
+import { deleteStorageImages } from '@/lib/storage';
 
 const partSchema = z.object({
   name: z.string().min(2, 'Name is required'),
@@ -171,7 +172,11 @@ export default function PartFormPage() {
                 <img src={image} alt="" className="h-full w-full object-cover" />
                 <button
                   type="button"
-                  onClick={() => setImages((p) => p.filter((_, i) => i !== index))}
+                  onClick={async () => {
+                    const url = images[index];
+                    setImages((p) => p.filter((_, i) => i !== index));
+                    await deleteStorageImages([url]);
+                  }}
                   className="absolute right-2 top-2 rounded-full bg-destructive p-1 text-destructive-foreground"
                 >
                   <X className="h-4 w-4" />

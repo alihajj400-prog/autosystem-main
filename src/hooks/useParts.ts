@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { compressImageFile } from '@/lib/images';
+import { deleteStorageImages } from '@/lib/storage';
 import { Part, PartFilters } from '@/types/part';
 
 function normalizePart(row: Record<string, unknown>): Part {
@@ -126,6 +127,20 @@ export function useUpdatePart() {
 
   return useMutation({
     mutationFn: async ({ id, ...part }: Partial<Part> & { id: string }) => {
+      if (part.images !== undefined) {
+        const { data: existing } = await supabase
+          .from('parts')
+          .select('images')
+          .eq('id', id)
+          .single();
+
+        const oldImages = (existing?.images as string[]) ?? [];
+        const removed = oldImages.filter((url) => !part.images!.includes(url));
+        if (removed.length > 0) {
+          await deleteStorageImages(removed);
+        }
+      }
+
       const { data, error } = await supabase.from('parts').update(part).eq('id', id).select().single();
       if (error) throw error;
       return data;
@@ -143,8 +158,19 @@ export function useDeletePart() {
 
   return useMutation({
     mutationFn: async (id: string) => {
+      const { data: existing } = await supabase
+        .from('parts')
+        .select('images')
+        .eq('id', id)
+        .single();
+
       const { error } = await supabase.from('parts').delete().eq('id', id);
       if (error) throw error;
+
+      const images = (existing?.images as string[]) ?? [];
+      if (images.length > 0) {
+        await deleteStorageImages(images);
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['parts'] });
