@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
 import { PublicLayout } from "@/components/layout/PublicLayout";
+import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import HomePage from "./pages/HomePage";
 import InventoryPage from "./pages/InventoryPage";
 import CarDetailPage from "./pages/CarDetailPage";
@@ -32,6 +33,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <ScrollToTop />
           <Analytics />
           <Routes>
             {/* Public Routes */}
