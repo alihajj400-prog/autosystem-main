@@ -25,7 +25,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Plus, Pencil, Trash2, Loader2, Search, Star, StarOff } from 'lucide-react';
 import { toast } from 'sonner';
-import { formatMileage } from '@/lib/format';
+import { formatCarTitle, formatMileage, stripMazdaPrefix } from '@/lib/format';
 
 export default function AdminCarsPage() {
   const { data: cars, isLoading } = useCars();
@@ -133,7 +133,7 @@ export default function AdminCarsPage() {
                       {car.images && car.images.length > 0 ? (
                         <img
                           src={car.images[0]}
-                          alt={car.model}
+                          alt={stripMazdaPrefix(car.model)}
                           className="h-12 w-16 rounded object-cover"
                         />
                       ) : (
@@ -142,7 +142,7 @@ export default function AdminCarsPage() {
                         </div>
                       )}
                       <div>
-                        <span className="font-medium">Mazda {car.model}</span>
+                        <span className="font-medium">Mazda {stripMazdaPrefix(car.model)}</span>
                         {car.location && (
                           <p className="text-xs text-muted-foreground">{car.location}</p>
                         )}
@@ -183,7 +183,7 @@ export default function AdminCarsPage() {
                         </AlertDialogTrigger>
                         <AlertDialogContent>
                           <AlertDialogHeader>
-                            <AlertDialogTitle>Delete {car.year} Mazda {car.model}?</AlertDialogTitle>
+                            <AlertDialogTitle>Delete {formatCarTitle(car.year, car.model)}?</AlertDialogTitle>
                             <AlertDialogDescription>
                               This action cannot be undone. This will permanently delete the car from your inventory.
                             </AlertDialogDescription>
@@ -191,7 +191,7 @@ export default function AdminCarsPage() {
                           <AlertDialogFooter>
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
                             <AlertDialogAction
-                              onClick={() => handleDelete(car.id, `${car.year} Mazda ${car.model}`)}
+                              onClick={() => handleDelete(car.id, formatCarTitle(car.year, car.model))}
                               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
                             >
                               Delete

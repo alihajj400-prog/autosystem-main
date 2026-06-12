@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { ArrowLeft, Fuel, Gauge, Settings, Calendar, Loader2, Phone, MessageCircle, MapPin } from 'lucide-react';
 import { BUSINESS } from '@/lib/constants';
-import { formatMileage, formatPrice } from '@/lib/format';
+import { formatMileage, formatPrice, formatCarTitle, stripMazdaPrefix } from '@/lib/format';
 
 export default function CarDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -41,7 +41,7 @@ export default function CarDetailPage() {
     );
   }
 
-  const carName = `${car.year} Mazda ${car.model}${car.trim ? ' ' + car.trim : ''}`;
+  const carName = formatCarTitle(car.year, car.model, car.trim);
   const whatsappMessage = encodeURIComponent(`Hi, I'm interested in the ${carName} listed on your website.`);
 
   return (
@@ -135,7 +135,7 @@ export default function CarDetailPage() {
                 </div>
                 <div className="flex justify-between rounded-lg border bg-card px-4 py-3">
                   <span className="text-sm text-muted-foreground">Model</span>
-                  <span className="text-sm font-medium">{car.model}</span>
+                  <span className="text-sm font-medium">{stripMazdaPrefix(car.model)}</span>
                 </div>
                 {car.trim && (
                   <div className="flex justify-between rounded-lg border bg-card px-4 py-3">

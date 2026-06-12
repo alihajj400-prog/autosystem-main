@@ -21,7 +21,8 @@ import { toast } from 'sonner';
 import { ArrowLeft, Loader2, Upload, X, Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SelectOrInput } from '@/components/admin/SelectOrInput';
-import { MAZDA_MODELS, LEBANESE_CITIES } from '@/lib/constants';
+import { LEBANESE_CITIES } from '@/lib/constants';
+import { stripMazdaPrefix } from '@/lib/format';
 import { deleteStorageImages } from '@/lib/storage';
 
 const carSchema = z.object({
@@ -174,7 +175,7 @@ export default function CarFormPage() {
     try {
       const carData = {
         make: 'Mazda' as string,
-        model: data.model,
+        model: stripMazdaPrefix(data.model),
         trim: data.trim || null,
         year: data.year,
         price: data.price,
@@ -286,17 +287,21 @@ export default function CarFormPage() {
 
         {/* Basic Info */}
         <div className="grid gap-6 sm:grid-cols-2">
-          <SelectOrInput
-            label="Model"
-            required
-            value={watch('model')}
-            onChange={(value) => setValue('model', value, { shouldValidate: true })}
-            options={MAZDA_MODELS}
-            placeholder="e.g., CX-5, Camaro, 3 Series..."
-            selectPlaceholder="Or select a common Mazda model"
-            formatOption={(model) => `Mazda ${model}`}
-            error={errors.model?.message}
-          />
+          <div>
+            <Label htmlFor="model">Model *</Label>
+            <Input
+              id="model"
+              {...register('model')}
+              placeholder="e.g., CX-5, CX-9 Premium"
+              className="mt-1.5"
+            />
+            <p className="mt-1 text-xs text-muted-foreground">
+              Type the model name only — &quot;Mazda&quot; is added automatically on the site.
+            </p>
+            {errors.model && (
+              <p className="mt-1 text-sm text-destructive">{errors.model.message}</p>
+            )}
+          </div>
 
           <div>
             <Label htmlFor="trim">Trim (optional)</Label>

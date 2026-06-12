@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { Car } from '@/types/car';
 import { Badge } from '@/components/ui/badge';
 import { Fuel, Gauge, Settings, MapPin, CheckCircle2 } from 'lucide-react';
-import { formatPrice, formatMileage } from '@/lib/format';
+import { formatPrice, formatMileage, formatCarTitle } from '@/lib/format';
 import { SiteImage } from '@/components/ui/SiteImage';
 
 interface CarCardProps {
@@ -21,7 +21,7 @@ export function CarCard({ car, priority = false }: CarCardProps) {
         {car.images && car.images.length > 0 ? (
           <SiteImage
             src={car.images[0]}
-            alt={`${car.year} Mazda ${car.model}`}
+            alt={formatCarTitle(car.year, car.model)}
             optimizedWidth={520}
             quality={68}
             priority={priority}
@@ -48,7 +48,7 @@ export function CarCard({ car, priority = false }: CarCardProps) {
       <div className="p-4 sm:p-5">
         <div className="mb-2">
           <h3 className="font-display text-base font-semibold text-foreground sm:text-lg">
-            {car.year} Mazda {car.model}
+            {formatCarTitle(car.year, car.model)}
           </h3>
           <p className="mt-1 text-sm text-muted-foreground line-clamp-2">
             {car.short_description}
