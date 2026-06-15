@@ -19,7 +19,7 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import { CarFilters as CarFiltersType } from '@/types/car';
-import { MAZDA_MODELS, YEARS } from '@/lib/constants';
+import { INVENTORY_MODEL_FILTERS, YEARS } from '@/lib/constants';
 
 interface CarFiltersProps {
   filters: CarFiltersType;
@@ -53,13 +53,16 @@ export function CarFilters({ filters, onFiltersChange }: CarFiltersProps) {
   ).length;
   const hasActiveFilters = activeFilterCount > 0;
 
+  const modelFilterLabel =
+    INVENTORY_MODEL_FILTERS.find((m) => m.value === filters.model)?.label ?? filters.model;
+
   const ActiveFilterBadges = () => {
     if (!hasActiveFilters) return null;
     return (
       <div className="flex flex-wrap gap-2 pt-2">
         {filters.model && (
           <Badge variant="secondary" className="gap-1">
-            {filters.model}
+            {modelFilterLabel}
             <button onClick={() => updateFilter('model', undefined)} className="ml-1">
               <X className="h-3 w-3" />
             </button>
@@ -115,9 +118,9 @@ export function CarFilters({ filters, onFiltersChange }: CarFiltersProps) {
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="__all">All models</SelectItem>
-            {MAZDA_MODELS.map((model) => (
-              <SelectItem key={model} value={model}>
-                Mazda {model}
+            {INVENTORY_MODEL_FILTERS.map((model) => (
+              <SelectItem key={model.value} value={model.value}>
+                {model.label}
               </SelectItem>
             ))}
           </SelectContent>

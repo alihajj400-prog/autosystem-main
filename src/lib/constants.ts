@@ -35,6 +35,16 @@ export const MAZDA_MODELS = [
   'MX-30',
 ];
 
+/** Inventory page model filter — value is matched against stored car.model */
+export const INVENTORY_MODEL_FILTERS = [
+  { value: 'CX-3', label: 'CX-3' },
+  { value: 'CX-5', label: 'CX-5' },
+  { value: 'CX-9', label: 'CX-9' },
+  { value: 'CX-30', label: 'CX-30' },
+  { value: 'Mazda3', label: 'Mazda 3' },
+  { value: 'CX-90', label: 'Mazda CX-90' },
+] as const;
+
 export const YEARS = Array.from({ length: 20 }, (_, i) => 2025 - i);
 
 export const PART_CATEGORIES = [
