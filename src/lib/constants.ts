@@ -4,7 +4,7 @@ export const BUSINESS = {
   tagline: 'Premium Used Mazda Vehicles in Lebanon',
   phone: '+961 78 740 074',
   whatsapp: '96178740074',
-  email: 'info@autosystemsal.com',
+  email: 'autosystemlb@hotmail.com',
   address: 'Zarif, Beirut, Lebanon',
   city: 'Beirut',
   country: 'Lebanon',
