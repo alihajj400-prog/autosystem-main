@@ -1,73 +1,83 @@
-# Welcome to your Lovable project
+# Auto System S.A.L.
 
-## Project info
+Website for **Auto System S.A.L.**, a Mazda dealership in Lebanon. The public site showcases used Mazda inventory, parts, and contact options. The admin area lets staff manage cars, parts, images, and customer inquiries.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+**Live site:** [https://www.autosystemsal.com](https://www.autosystemsal.com)
 
-## How can I edit this code?
+## Features
 
-There are several ways of editing your application.
+- Vehicle inventory with search and filters
+- Car detail pages with image gallery and contact form
+- Parts catalog
+- Admin dashboard for cars, parts, and contact requests
+- Supabase authentication and storage for admin users
 
-**Use Lovable**
+## Tech stack
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+- [Vite](https://vitejs.dev/) + [React](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/) + [shadcn/ui](https://ui.shadcn.com/)
+- [Supabase](https://supabase.com/) (database, auth, storage)
+- [Vercel](https://vercel.com/) (hosting)
 
-Changes made via Lovable will be committed automatically to this repo.
+## Local development
 
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+**Requirements:** Node.js 18+ and npm
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+git clone https://github.com/alihajj400-prog/autosystem-main.git
+cd autosystem-main
+npm install
+cp .env.example .env
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The dev server runs at `http://localhost:5173` by default.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Environment variables
 
-**Use GitHub Codespaces**
+Create a `.env` file in the project root (see `.env.example`):
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+| Variable | Description |
+| --- | --- |
+| `VITE_SUPABASE_URL` | Supabase project URL |
+| `VITE_SUPABASE_PUBLISHABLE_KEY` | Supabase publishable (anon) key |
 
-## What technologies are used for this project?
+These are the only variables required to run the website.
 
-This project is built with:
+## Scripts
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Start development server |
+| `npm run build` | Production build |
+| `npm run preview` | Preview production build locally |
+| `npm run lint` | Run ESLint |
+| `npm test` | Run tests |
 
-## How can I deploy this project?
+## Deployment
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+The site is deployed on Vercel. Pushes to `main` trigger automatic deployments.
 
-## Can I connect a custom domain to my Lovable project?
+Set the same Supabase environment variables in the Vercel project settings before deploying.
 
-Yes, you can!
+## Database setup
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+SQL migrations and setup scripts live in the `supabase/` folder. Run `supabase/setup-all.sql` on a new Supabase project to create tables, policies, and storage buckets.
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Admin access is granted by adding an `admin` role in the `user_roles` table for an authenticated user (see `supabase/grant-admin.sql`).
+
+## Project structure
+
+```
+src/
+  components/   # UI and page components
+  hooks/        # Data fetching and auth
+  pages/        # Route pages (public + admin)
+  integrations/ # Supabase client
+  lib/          # Shared utilities and constants
+supabase/       # SQL setup and migrations
+```
+
+## License
+
+Private — © Auto System S.A.L.
