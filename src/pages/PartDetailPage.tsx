@@ -53,7 +53,7 @@ export default function PartDetailPage() {
                 {part.images.map((img, i) => (
                   <div
                     key={i}
-                    className={`relative overflow-hidden rounded-xl border bg-muted ${i === 0 ? 'sm:col-span-2 aspect-video' : 'aspect-square'}`}
+                    className={`relative overflow-hidden rounded-xl border bg-neutral-100 ${i === 0 ? 'sm:col-span-2 aspect-video' : 'aspect-square'}`}
                   >
                     <SiteImage
                       src={img}
@@ -63,7 +63,13 @@ export default function PartDetailPage() {
                       priority={i === 0}
                       width={i === 0 ? 960 : 480}
                       height={i === 0 ? 540 : 480}
-                      className="object-cover"
+                      className="object-contain object-center p-3 sm:p-4"
+                      fallback={
+                        <div className="flex flex-col items-center gap-2 text-muted-foreground">
+                          <Package className="h-10 w-10 opacity-40" />
+                          <span className="text-xs">Image unavailable</span>
+                        </div>
+                      }
                     />
                   </div>
                 ))}

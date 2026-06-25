@@ -106,6 +106,56 @@ export function useFeaturedParts() {
   });
 }
 
+const HOME_PARTS_LIMIT = 9;
+
+/** Homepage catalog: featured first, then a mix of parts and screens. */
+export function useHomeParts(limit = HOME_PARTS_LIMIT) {
+  return useQuery({
+    queryKey: ['parts', 'home', limit],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('parts')
+        .select('*')
+        .eq('status', 'available')
+        .order('featured', { ascending: false })
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+
+      const all = (data ?? []).map(normalizePart);
+      if (all.length === 0) return [];
+
+      const selected: Part[] = [];
+      const used = new Set<string>();
+
+      const pick = (items: Part[]) => {
+        for (const item of items) {
+          if (selected.length >= limit) return;
+          if (!used.has(item.id)) {
+            selected.push(item);
+            used.add(item.id);
+          }
+        }
+      };
+
+      const featured = all.filter((p) => p.featured);
+      const screens = all.filter((p) => p.type === 'screen');
+      const parts = all.filter((p) => p.type === 'part');
+
+      pick(featured);
+
+      const screenSlots = screens.length > 0 ? Math.min(3, screens.length) : 0;
+      const partSlots = Math.min(limit - selected.length - screenSlots, parts.length);
+
+      pick(parts.slice(0, partSlots));
+      pick(screens.slice(0, screenSlots));
+      pick(all);
+
+      return selected.slice(0, limit);
+    },
+  });
+}
+
 export function useCreatePart() {
   const queryClient = useQueryClient();
 

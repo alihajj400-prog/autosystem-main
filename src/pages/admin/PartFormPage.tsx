@@ -168,8 +168,8 @@ export default function PartFormPage() {
           <Label className="text-base font-semibold">Images</Label>
           <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
             {images.map((image, index) => (
-              <div key={index} className="relative aspect-square overflow-hidden rounded-lg border">
-                <img src={image} alt="" className="h-full w-full object-cover" />
+              <div key={index} className="relative aspect-square overflow-hidden rounded-lg border bg-neutral-100">
+                <img src={image} alt="" className="h-full w-full object-contain object-center p-2" />
                 <button
                   type="button"
                   onClick={async () => {

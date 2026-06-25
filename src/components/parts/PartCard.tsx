@@ -19,7 +19,10 @@ export function PartCard({ part, priority = false }: PartCardProps) {
 
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-xl border bg-card card-shadow transition-all duration-300 hover:card-shadow-hover hover-lift">
-      <Link to={`/parts/${part.id}`} className="relative aspect-[4/3] overflow-hidden bg-muted">
+      <Link
+        to={`/parts/${part.id}`}
+        className="relative aspect-[4/3] overflow-hidden rounded-t-xl bg-neutral-100"
+      >
         {part.images.length > 0 ? (
           <SiteImage
             src={part.images[0]}
@@ -29,11 +32,18 @@ export function PartCard({ part, priority = false }: PartCardProps) {
             priority={priority}
             width={640}
             height={480}
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            className="object-contain object-center p-3 sm:p-4"
+            fallback={
+              <div className="flex flex-col items-center gap-2 text-muted-foreground">
+                <Package className="h-10 w-10 opacity-40" />
+                <span className="text-xs">No image</span>
+              </div>
+            }
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center text-muted-foreground">
+          <div className="flex h-full w-full flex-col items-center justify-center gap-2 text-muted-foreground">
             <Package className="h-10 w-10 opacity-40" />
+            <span className="text-xs">No image</span>
           </div>
         )}
         <div className="absolute left-3 top-3 flex flex-wrap gap-2">

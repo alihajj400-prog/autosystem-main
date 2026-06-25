@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { getSizedImageUrl } from '@/lib/images';
 import { cn } from '@/lib/utils';
 
@@ -11,6 +11,7 @@ interface SiteImageProps {
   priority?: boolean;
   width?: number;
   height?: number;
+  fallback?: ReactNode;
 }
 
 export function SiteImage({
@@ -22,10 +23,12 @@ export function SiteImage({
   priority = false,
   width,
   height,
+  fallback,
 }: SiteImageProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(priority);
   const [loaded, setLoaded] = useState(false);
+  const [failed, setFailed] = useState(false);
   const [currentSrc, setCurrentSrc] = useState(src);
 
   useEffect(() => {
@@ -52,6 +55,11 @@ export function SiteImage({
   }, [priority]);
 
   useEffect(() => {
+    setFailed(false);
+    setLoaded(false);
+  }, [src]);
+
+  useEffect(() => {
     if (!inView) return;
     setLoaded(false);
     setCurrentSrc(
@@ -63,8 +71,21 @@ export function SiteImage({
     if (currentSrc !== src) {
       setCurrentSrc(src);
       setLoaded(false);
+      return;
     }
+    setFailed(true);
   };
+
+  if (failed) {
+    return (
+      <div
+        ref={containerRef}
+        className="absolute inset-0 flex items-center justify-center bg-neutral-100 text-muted-foreground"
+      >
+        {fallback ?? <span className="px-3 text-center text-xs">Image unavailable</span>}
+      </div>
+    );
+  }
 
   return (
     <div ref={containerRef} className="absolute inset-0">

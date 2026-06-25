@@ -5,7 +5,7 @@ import { CarCard } from '@/components/cars/CarCard';
 import { PartCard } from '@/components/parts/PartCard';
 import { HomeHero } from '@/components/home/HomeHero';
 import { useFeaturedCars } from '@/hooks/useCars';
-import { useFeaturedParts } from '@/hooks/useParts';
+import { useHomeParts } from '@/hooks/useParts';
 import { BUSINESS } from '@/lib/constants';
 
 const TESTIMONIALS = [
@@ -37,7 +37,7 @@ const TESTIMONIALS = [
 
 export default function HomePage() {
   const { data: featuredCars, isLoading } = useFeaturedCars();
-  const { data: featuredParts, isLoading: partsLoading } = useFeaturedParts();
+  const { data: homeParts, isLoading: partsLoading } = useHomeParts();
 
   return (
     <div className="animate-fade-in">
@@ -145,14 +145,14 @@ export default function HomePage() {
           </div>
           {partsLoading ? (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {[1, 2, 3].map((i) => (
+              {Array.from({ length: 9 }).map((_, i) => (
                 <div key={i} className="aspect-[4/3] animate-pulse rounded-xl bg-muted" />
               ))}
             </div>
-          ) : featuredParts && featuredParts.length > 0 ? (
+          ) : homeParts && homeParts.length > 0 ? (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {featuredParts.map((part, index) => (
-                <PartCard key={part.id} part={part} priority={index === 0} />
+              {homeParts.map((part, index) => (
+                <PartCard key={part.id} part={part} priority={index < 3} />
               ))}
             </div>
           ) : (
